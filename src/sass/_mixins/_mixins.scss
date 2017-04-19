@@ -1,0 +1,28 @@
+/*** mixins.scss ***/
+.blue-header{
+  background:$blue-color;
+  border-top:1px solid $border-color;
+  border-bottom:1px solid $border-color;
+  transition:0.3s all ease;
+
+  padding:1em 6em;
+  &:hover{
+    background:$blue-color-hover;
+  }
+  a,span{
+    color:$white-color;
+  }
+  a{
+    text-decoration:none;
+  }
+}
+//Blue Header Div
+@mixin blueheader(){
+  background:$blue-color;
+  border-top:1px solid $border-color;
+  border-bottom:1px solid $border-color;
+  padding:1em;
+  a,span{
+      color:$white-color;
+  }
+}

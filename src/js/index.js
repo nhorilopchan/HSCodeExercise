@@ -1,1 +1,1 @@
-var i;
+/* index.js */
