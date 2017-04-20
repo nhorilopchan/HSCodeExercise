@@ -1,5 +1,33 @@
 /*** mixins.scss ***/
-.blue-header{
+
+//Text
+@mixin content-text(){
+  font-family: 'Roboto Slab';
+  font-style: normal;
+  font-weight: 300;
+  font-size: 0.85em;
+  margin-bottom: 1em;
+}
+//Buttons
+@mixin blue-button(){
+  font-family: 'Montserrat';
+  font-style: normal;
+  font-weight: 400;
+  padding: 1em;
+  background: $blue-color;
+  color: $white-color;
+  text-transform: uppercase;
+  font-size:0.65em;
+  border-radius: 0.25em;
+  transtion:all 0.3s ease;
+  &:hover{
+    background:$blue-color-hover;
+  }
+
+}
+
+//Blue Header Div
+@mixin blueheader(){
   background:$blue-color;
   border-top:1px solid $border-color;
   border-bottom:1px solid $border-color;
@@ -14,15 +42,5 @@
   }
   a{
     text-decoration:none;
-  }
-}
-//Blue Header Div
-@mixin blueheader(){
-  background:$blue-color;
-  border-top:1px solid $border-color;
-  border-bottom:1px solid $border-color;
-  padding:1em;
-  a,span{
-      color:$white-color;
   }
 }

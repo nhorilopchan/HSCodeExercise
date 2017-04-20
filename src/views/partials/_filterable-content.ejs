@@ -1,13 +1,18 @@
-<section>
-	<div>
+<!-- Filterable Content Block -->
+<script type="application/json" src="/src/js/data/data.json"></script>
+
+
+<%include ../partials/_blueheader%>
+<section class="filterable-content-block">
+	<div class="content-wrapper">
 		<div>
-			<div>
-				<div>
-					<div>
+			<div class="filters-panel">
+				<div class="row first">
+					<div class="dropdown">
 						<span>Genre</span>
 						<div></div>
 					</div>
-					<div>
+					<div class="dropdown">
 						<span>Year</span>
 						<div></div>
 					</div>
@@ -15,7 +20,7 @@
 						<input type="text">
 					</div>
 				</div>
-				<div>
+				<div class="row second">
 					<div>
 						<input type="radio">
 						<label>Movies</label>
@@ -24,7 +29,7 @@
 						<input type="radio">
 						<label>Books</label>
 					</div>
-					<div >
+					<div class="clear-filters">
 						<a href="#">Clear filters</a>
 					</div>
 				</div>
@@ -32,10 +37,13 @@
 		</div>
 	</div>
 
-	<div>
+	<div class="content-wrapper haslist">
 		<div>
 			<div>
-				<ul></ul>
+				<!-- Wanna get data :var data = JSON.parse('/src/js/data/data.json'); -->
+				<ul id="contents-list" class="contents-list">
+                  <!-- wanna loop through the object and start templating-->
+				</ul>
 			</div>
 		</div>
 	</div>

@@ -38,8 +38,9 @@
     });
 
     //CSS Files
-    var cssSourceFiles = ['src/sass/_variables/*.scss','src/sass/_mixins/*.scss',
-                           'src/sass/_patials/*.scss','src/sass/*.scss']
+    var cssSourceFiles = ['src/sass/_partials/*.scss','src/sass/*.scss','src/sass/_mixins/*.scss'
+                          ,'src/sass/_variables/*.scss'
+                          ]
         cssDest ='./dist/css';
 
     gulp.task('sass', function() {

@@ -1,0 +1,39 @@
+/* cta.scss */
+.blue-header{
+  @include blueheader();
+}
+.cta-block{
+
+  &.content-wrapper{
+    display:inline-block;
+    margin:1em 0;
+    background: $dark-bg;
+    padding:1.5em 1em;
+    .content-block{
+      width:65%;
+      margin:0 auto;
+      >div{
+        float:left;
+      }
+
+      p{
+        @include content-text();
+        color:$white-color;
+        width: 75%;
+        float: left;
+        padding-right: 1em;
+      }
+
+      a{
+        &.button{
+          @include blue-button();
+        }
+      }
+
+      .content-text{
+        color:$white-color;
+      }
+    }
+
+  }
+}

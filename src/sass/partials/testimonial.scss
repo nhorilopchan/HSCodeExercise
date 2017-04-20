@@ -1,26 +1,28 @@
   /* testimonial.scss **/
-
+  .blue-header{
+    @include blueheader();
+  }
   .testimonial-block{
-    .content-wrapper{
+    &.content-wrapper{
       display:inline-block;
       margin:1em 0;
       background: $light-gray-bg;
       padding:1.5em 1em;
       .content{
+
         width:50%;
         margin:0 auto;
         .quote-bg{
 
         }
         p{
-          font-family: 'Roboto Slab';
-          font-style: normal;
-          font-weight: 300;
-          font-size: 0.85em;
-          margin-bottom: 1em;
+          @include content-text();
         }
         span{
           &.author{
+            font-family: 'Roboto Slab';
+            font-style: normal;
+            font-weight: 300;
             font-weight:bold;
             font-size: 0.75em;
           }
