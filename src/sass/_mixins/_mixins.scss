@@ -39,8 +39,10 @@ $filterable-control:'filterable content';
   border-top:1px solid $border-color;
   border-bottom:1px solid $border-color;
   transition:0.3s all ease;
-
   padding:1em 6em;
+  @include tabletportrait{
+
+  }
   &:hover{
     background:$blue-hover;
   }

@@ -15,5 +15,5 @@ function init(){
     alert('hi');
     dropdownClick();
 }
-window.load = init;
+
 

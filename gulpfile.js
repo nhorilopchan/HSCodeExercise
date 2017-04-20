@@ -16,6 +16,20 @@ var data = require('gulp-data');
 var sassmixins = require('gulp-sass-to-postcss-mixins');
 var sugarss    = require('sugarss');
 var precss     = require('precss');
+var fs = require("fs");
+var $ = require('jquery');
+var jsdom = require("jsdom").jsdom;
+var doc = jsdom();
+var window = doc.defaultView;
+
+require("jsdom").env("", function(err, window) {
+    if (err) {
+        console.error(err);
+        return;
+    }
+
+    var $ = require("jquery")(window);
+});
 
 gulp.task('ejs', function() {
     return gulp.src('src/views/**/*.ejs')
