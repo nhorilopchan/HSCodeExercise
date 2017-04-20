@@ -1,30 +1,67 @@
 <!-- Filterable Content Block -->
 <%include ../partials/_blueheader%>
-
+<%
+function getUniqueValues(array, key) {
+	var uniqueYears = new Set();
+	console.log(array);
+	console.log(key);
+	array.forEach(function(item) {
+		if (item.hasOwnProperty(key)) {
+			uniqueYears.add(item[key]);
+		}
+	});
+	console.log(uniqueYears);
+	return uniqueYears;
+}
+%>
 <section class="filterable-content-block">
 	<div class="content-wrapper">
 		<div>
 			<div class="filters-panel">
 				<div class="row first">
 					<div class="dropdown by-genre">
-						<span>Genre</span>
-						<div>
-                            <% data.media.forEach(function(media) {
-//								var blah = data.map(media => media.type)
-//												.filter((value,index,self)=>self.indexOf((value===index)));
-//								console.log(blah);
-							%>
-
-                            <%});%>
-						</div>
+						<span class="toggle">Genre</span>
+							<div class="dropdown-content">
+								<select id="ddl-by-genre">
+									<!-- TODO- FIX THIS -->
+									<%
+									var uniqueGenres = getUniqueValues(data.media, "genre");
+									console.log(uniqueGenres);
+									var bb = new Set();
+									uniqueGenres.forEach(function (genreb) {
+										var b = genreb.toString();
+										bb.add(b);
+									});
+									console.log(bb);
+									bb.forEach(function (genre) {
+ 									%>
+									<option><a href="#" title="<%= genre%>"><%=genre%></a></option>
+									<%});%>
+								</select>
+							</div>
 					</div>
 					<div class="dropdown by-year">
-						<span>Year</span>
-						<div></div>
+						<span class="toggle">Year</span>
+						<div class="dropdown-content">
+
+						<select id="ddl-by-year">
+						<% var uniqueYears= getUniqueValues(data.media, "year");
+						uniqueYears.forEach(function(year) {
+                        %>
+							<option><a href="#" title="<%= year%>"><%= year%></a></option>
+                        <%});%>
+						</select>
+						</div>
 					</div>
-					<div class="search-input">
-						<div class="search icon"></div>
+					<div id="search-input" class="search-input">
 						<input type="text">
+						<ul class="search-list">
+                            <% var uniqueTitles= getUniqueValues(data.media, "title");
+							uniqueTitles.forEach(function(title) {
+                            %>
+							<li><a href="#" title="<%=title%>"><%= title%></a></li>
+                            <%});%>
+						</ul>
 					</div>
 				</div>
 				<div class="row second">

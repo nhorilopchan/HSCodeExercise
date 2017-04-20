@@ -1,7 +1,7 @@
 var gulp = require('gulp');
 var browserSync = require('browser-sync').create();
 var browserify = require('browserify');
-var babelify = require('babelify');
+const babel = require('gulp-babel');
 var uglify = require('gulp-uglify');
 var watch = require('gulp-watch');
 var del = require('del');
@@ -13,23 +13,11 @@ var ejs = require('gulp-ejs');
 var minify = require('gulp-minify');
 var reload  = browserSync.reload;
 var data = require('gulp-data');
+var sourcemaps = require('gulp-sourcemaps');
 var sassmixins = require('gulp-sass-to-postcss-mixins');
 var sugarss    = require('sugarss');
 var precss     = require('precss');
 var fs = require("fs");
-var $ = require('jquery');
-var jsdom = require("jsdom").jsdom;
-var doc = jsdom();
-var window = doc.defaultView;
-
-require("jsdom").env("", function(err, window) {
-    if (err) {
-        console.error(err);
-        return;
-    }
-
-    var $ = require("jquery")(window);
-});
 
 gulp.task('ejs', function() {
     return gulp.src('src/views/**/*.ejs')
@@ -47,6 +35,10 @@ var jsSourceFiles = 'src/js/*.js',
 
 gulp.task('js', function() {
     gulp.src(jsSourceFiles)
+        .pipe(sourcemaps.init())
+        .pipe(babel({
+            presets: ['es2015']
+        }))
         .pipe(concat('scripts.js'))
         .pipe(minify({
             ext:{
@@ -56,7 +48,8 @@ gulp.task('js', function() {
             exclude: ['tasks'],
             ignoreFiles: ['-min.js']
         }))
-        .pipe(gulp.dest(jsDest));
+        .pipe(gulp.dest(jsDest))
+        .pipe(browserSync.stream());
 });
 
 //CSS Files
@@ -77,7 +70,7 @@ gulp.task('sass', function() {
 });
 gulp.task('watch', function() {
     gulp.watch('src/views/**/*.ejs',['ejs']).on('change',reload);
-    gulp.watch('src/js/*.js',['js']).on('change',reload);
+    gulp.watch('build/scripts/*.js',['js']).on('change',reload);
     gulp.watch('src/sass/**/*.scss',['sass']).on('change',reload);
 });
 gulp.task('serve',['watch'], function() {
@@ -91,4 +84,5 @@ gulp.task('serve',['watch'], function() {
 
 // The default task (called when we run `gulp` from cli)
 gulp.task('default', ['ejs','js','sass','watch', 'serve'], function() {
+    gulp.watch( "./src/**/*.scss", [ 'sass' ] );
 });

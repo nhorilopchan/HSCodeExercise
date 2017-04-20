@@ -60,3 +60,28 @@ $filterable-control:'filterable content';
     }
   }
 }
+
+//Dropdown
+@mixin dropdowns(){
+  display:none;
+  font-size:0.75em;
+  list-style-type: none;
+  transition:0.3s display ease;
+  &.active{
+    display:block;
+    border: 1px solid $medium-gray;
+    position: absolute;
+    z-index: 9999999;
+    background: $white;
+    width: 100%;
+    li{
+      padding:0.5em;
+      a{
+        color:$blue;
+        &:hover {
+          color: $blue-hover;
+        }
+      }
+    }
+  }
+}
