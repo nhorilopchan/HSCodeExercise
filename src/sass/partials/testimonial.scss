@@ -10,9 +10,11 @@
         background: $light-gray-bg;
         padding: 1.5em 1em;
         .content {
-
           width: 50%;
           margin: 0 auto;
+          @include tabletportrait{
+            width:60%;
+          }
           .quote-bg {
 
           }

@@ -13,6 +13,9 @@
       .content-block {
         width: 75%;
         margin: 0 auto;
+        @include tabletportrait{
+          width:100%;
+        }
         > div {
           float: left;
         }
@@ -25,6 +28,10 @@
           width: 88%;
           float: left;
           padding-right: 1em;
+          @include tabletportrait{
+            width:100%;
+            float:none;
+          }
         }
 
         a {
@@ -35,6 +42,9 @@
             -webkit-transform: translateY(100%);
             -ms-transform: translateY(100%);
             transform: translateY(100%);
+            @include tabletportrait{
+              transform: none;
+            }
           }
         }
       }

@@ -1,44 +1,34 @@
-@mixin respond-to($media) {
-  // Phone
-  @if $media == phone {
-    @media (max-width: 480px) {
-      @content;
-    }
+/* _include_media.scss */
+
+
+$xs-phone: 320px;
+$sm-phone: 375px;
+$phone: 480px;
+$x1-phone: 560px;
+$xxl-phone: 736px;
+$tablet: 768px;
+$tablet-x: 800px;
+$tablet-xl: 992px;
+$desktop: 1024px;
+$desktop-x: 1300px;
+$widescreen: 1550px;
+
+$greaterorequal:'>=';
+$lesserorequal:'<=';
+
+@mixin tabletportrait {
+  @media (min-width: #{$xs-phone}-1px) and (max-width: #{$tablet-xl - 1px}) {
+    @content;
   }
-    // Tablet Portrait
-  @else if $media == tablet-portrait {
-    @media (max-width: 767px) {
-      @content;
-    }
+}
+@mixin desktop {
+  @media (min-width: #{$xxl-phone}-1px) and (max-width: #{$tablet-xl - 1px}) {
+    @content;
   }
-    // Tablet Landscape - Desktop
-  @else if $media == tablet-landscape-desktop {
-    @media (min-width: 768px) and (max-width: 979px) {
-      @content;
-    }
-  }
-    // Large Desktop
-  @else if $media == large-desktop {
-    @media (min-width: 1200px) {
-      @content;
-    }
-  }
-    // Non-Retina
-  @else if $media == non-retina {
-    @media screen and (-webkit-max-device-pixel-ratio: 1) {
-      @content;
-    }
-  }
-    // Retina Only
-  @else if $media == retina {
-    @media screen and (-webkit-min-device-pixel-ratio: 2) {
-      @content;
-    }
-  }
-    // Custom breakpoint
-  @else {
-    @media ($media) {
-      @content;
-    }
+}
+
+@mixin desktop {
+  @media (min-width: #{$desktop-width}) {
+    @content;
   }
 }
