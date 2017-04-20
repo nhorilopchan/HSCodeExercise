@@ -1,8 +1,6 @@
 <!-- Filterable Content Block -->
-<script type="application/json" src="/src/js/data/data.json"></script>
-
-
 <%include ../partials/_blueheader%>
+
 <section class="filterable-content-block">
 	<div class="content-wrapper">
 		<div>
@@ -37,13 +35,24 @@
 		</div>
 	</div>
 
-	<div class="content-wrapper haslist">
+	<div class="content-wrapper list-wrapper">
 		<div>
 			<div>
-				<!-- Wanna get data :var data = JSON.parse('/src/js/data/data.json'); -->
-				<ul id="contents-list" class="contents-list">
-                  <!-- wanna loop through the object and start templating-->
+				<ul class="contents-list">
+                    <% data.media.forEach(function(media) {
+					%>
+					<li>
+						<div class="thumbnail-wrapper">
+							<img src="<%= media.poster %>" title="<%= media.title %>" />
+						</div>
+						<div class="info-wrapper">
+							<p><%= media.title %>(<%= media.year%>)</p>
+							<p>Genres:<%= media.genre%></p>
+						</div>
+					</li>
+                    <% }); %>
 				</ul>
+
 			</div>
 		</div>
 	</div>

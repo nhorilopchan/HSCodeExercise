@@ -1,5 +1,6 @@
 /*** mixins.scss ***/
 
+
 //Text
 @mixin content-text(){
   font-family: 'Roboto Slab';
@@ -14,31 +15,31 @@
   font-style: normal;
   font-weight: 400;
   padding: 1em;
-  background: $blue-color;
-  color: $white-color;
+  background: $blue;
+  color: $white;
   text-transform: uppercase;
   font-size:0.65em;
   border-radius: 0.25em;
   transtion:all 0.3s ease;
   &:hover{
-    background:$blue-color-hover;
+    background:$blue-hover;
   }
 
 }
 
 //Blue Header Div
 @mixin blueheader(){
-  background:$blue-color;
+  background:$blue;
   border-top:1px solid $border-color;
   border-bottom:1px solid $border-color;
   transition:0.3s all ease;
 
   padding:1em 6em;
   &:hover{
-    background:$blue-color-hover;
+    background:$blue-hover;
   }
   a,span{
-    color:$white-color;
+    color:$white;
   }
   a{
     text-decoration:none;

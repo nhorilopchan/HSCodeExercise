@@ -28,10 +28,10 @@
             &.dropdown {
               padding: 0.25em 1em;
               background: $light-gray-bg;
-              border-bottom: 4px solid $darker-gray-color;
+              border-bottom: 4px solid $medium-gray;
               margin-right: 1em;
               span {
-                color: $dark-gray-color;
+                color: $dark-gray;
                 text-transform: uppercase;
                 font-size: 0.85em;
                 font-weight: 700;
@@ -46,7 +46,7 @@
 
             }
             input[type="text"] {
-              border: 1px solid $dark-gray-color;
+              border: 1px solid $dark-gray;
               padding: 0.5em 1em;
               //&:before{
               //  width: 0px;
@@ -59,8 +59,8 @@
               //  -ms-transform: rotate(45deg);
               //  border-bottom: 10px solid currentColor;
               //  -webkit-transform: rotate(45deg);
-              //  border-left: 6px solid $dark-gray-color;
-              //  border-right: 6px solid $dark-gray-color;
+              //  border-left: 6px solid $dark-gray;
+              //  border-right: 6px solid $dark-gray;
               //}
               //&:after{
               //  content: "";
@@ -69,7 +69,7 @@
               //  display: block;
               //  margin-top: -4px;
               //  margin-left: -18px;
-              //  background-color: $dark-gray-color;
+              //  background-color: $dark-gray;
               //  transform: rotate(45deg);
               //  -ms-transform: rotate(45deg);
               //  border-bottom-left-radius: 50px;
@@ -89,8 +89,13 @@
             }
             &.clear-filters{
               a{
-                color:$blue-color;
+                color:$blue;
                 text-decoration: underline;
+                text-transform: uppercase;
+                transition:0.3s color ease;
+                &:hover{
+                  color:$blue-hover;
+                }
               }
             }
           }
@@ -101,9 +106,34 @@
         float:left;
       }
     }
-    &.haslist{
-      .contents-list{
+    &.list-wrapper{
+      ul.contents-list{
         list-style-type: none;
+        display: flex;
+        flex-wrap:wrap;
+        width:100%;
+        li{
+          width: 26%;
+          float: left;
+          padding: 1em 1.25em;
+          flex: 1 0 25%;
+          box-sizing: border-box;
+          padding: 0.75em;
+          .thumbnail-wrapper{
+            img{
+              max-width:100%;
+              height:auto;
+            }
+          }
+          .info-wrapper{
+            padding-top: 0.75em;
+            p{
+              font-family: 'Montserrat';
+              font-size:0.85em;
+              padding-bottom:0.5em;
+            }
+          }
+        }
       }
     }
   }
