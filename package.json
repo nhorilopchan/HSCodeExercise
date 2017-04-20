@@ -26,8 +26,11 @@
     "gulp-minify": "0.0.15",
     "gulp-noop": "^1.0.0",
     "gulp-sass": "^2.3.2",
+    "gulp-sass-to-postcss-mixins": "0.0.3",
     "gulp-uglify": "^1.5.3",
     "gulp-watch": "^4.3.11",
+    "precss": "^1.4.0",
+    "sugarss": "^0.2.0",
     "vinyl-source-stream": "^1.1.0"
   }
 }

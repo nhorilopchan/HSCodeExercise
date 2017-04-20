@@ -13,6 +13,9 @@ var ejs = require('gulp-ejs');
 var minify = require('gulp-minify');
 var reload  = browserSync.reload;
 var data = require('gulp-data');
+var sassmixins = require('gulp-sass-to-postcss-mixins');
+var sugarss    = require('sugarss');
+var precss     = require('precss');
 
 gulp.task('ejs', function() {
     return gulp.src('src/views/**/*.ejs')
@@ -50,9 +53,11 @@ cssDest ='./build/css';
 
 gulp.task('sass', function() {
     gulp.src(cssSourceFiles)
+        .pipe(sassmixins())
         .pipe(sass().on('error', sass.logError))
         .pipe(concat('styles.css'))
         .pipe(minify())
+        // .pipe(postcss([precss],{ parser: sugarss }))
         .pipe(gulp.dest(cssDest)
         );
 });

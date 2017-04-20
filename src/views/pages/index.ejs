@@ -5,7 +5,7 @@
 <head>
     <% include ../partials/_head %>
 
-    <% include ../partials/_scriptsblock %>
+
 </head>
 <body class="container">
 <!-- HEADER -->
@@ -14,22 +14,24 @@
 </header>
 
 <main>
+    <!-- TESTIMONIAL -->
+    <div class="main-testimonial">
+        <% include ../partials/_testimonial %>
+    </div>
     <!-- CTA -->
-    <div>
+    <div class="main-cta">
         <% include ../partials/_cta %>
     </div>
     <!-- FILTERABLE CONTENT -->
-    <div>
+    <div class="main-filterable-content">
         <% include ../partials/_filterable-content %>
     </div>
-    <!-- TESTIMONIAL -->
-    <div>
-        <% include ../partials/_testimonial %>
-    </div>
+
 </main>
 <!-- FOOTER -->
 <footer>
     <% include ../partials/_footer %>
 </footer>
+<% include ../partials/_scriptsblock %>
 </body>
 </html>

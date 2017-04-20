@@ -1,34 +1,34 @@
   /* testimonial.scss **/
-  .blue-header{
-    @include blueheader();
-  }
-  .testimonial-block{
-    &.content-wrapper{
-      display:inline-block;
-      margin:1em 0;
-      background: $light-gray-bg;
-      padding:1.5em 1em;
-      .content{
+  .main-testimonial {
+    .blue-header {
+      @include blueheader($testimonial-control);
+    }
+    .testimonial-block {
+      &.content-wrapper {
+        display: inline-block;
+        margin: 1em 0;
+        background: $light-gray-bg;
+        padding: 1.5em 1em;
+        .content {
 
-        width:50%;
-        margin:0 auto;
-        .quote-bg{
+          width: 50%;
+          margin: 0 auto;
+          .quote-bg {
 
-        }
-        p{
-          @include content-text();
-        }
-        span{
-          &.author{
-            font-family: 'Roboto Slab';
-            font-style: normal;
-            font-weight: 300;
-            font-weight:bold;
-            font-size: 0.75em;
           }
+          p {
+            @include setfontstyle('Roboto Slab', normal, 300);
+            @include content-text(inherit);
+          }
+          span {
+            &.author {
+              @include setfontstyle('Montserrat', normal, 0.75em);
+              font-weight: 700;
+            }
 
+          }
         }
-      }
 
+      }
     }
   }

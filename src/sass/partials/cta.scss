@@ -1,39 +1,44 @@
 /* cta.scss */
-.blue-header{
-  @include blueheader();
-}
-.cta-block{
+.main-cta {
+  .blue-header {
+    @include blueheader($cta-control);
+  }
+  .cta-block {
 
-  &.content-wrapper{
-    display:inline-block;
-    margin:1em 0;
-    background: $dark-bg;
-    padding:1.5em 1em;
-    .content-block{
-      width:65%;
-      margin:0 auto;
-      >div{
-        float:left;
-      }
-
-      p{
-        @include content-text();
-        color:$white;
+    &.content-wrapper {
+      display: inline-block;
+      margin: 1em 0;
+      background: $dark-bg;
+      padding: 1.5em 1em;
+      .content-block {
         width: 75%;
-        float: left;
-        padding-right: 1em;
-      }
+        margin: 0 auto;
+        > div {
+          float: left;
+        }
 
-      a{
-        &.button{
-          @include blue-button();
+        p {
+          @include setfontstyle('Roboto Slab', normal, 300);
+          @include content-text($white);
+          color: $white;
+          display: inline-block;
+          width: 88%;
+          float: left;
+          padding-right: 1em;
+        }
+
+        a {
+          &.button {
+            @include blue-button();
+            display: inline-block;
+            position: relative;
+            -webkit-transform: translateY(100%);
+            -ms-transform: translateY(100%);
+            transform: translateY(100%);
+          }
         }
       }
 
-      .content-text{
-        color:$white;
-      }
     }
-
   }
 }

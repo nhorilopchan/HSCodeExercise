@@ -6,11 +6,19 @@
 		<div>
 			<div class="filters-panel">
 				<div class="row first">
-					<div class="dropdown">
+					<div class="dropdown by-genre">
 						<span>Genre</span>
-						<div></div>
+						<div>
+                            <% data.media.forEach(function(media) {
+//								var blah = data.map(media => media.type)
+//												.filter((value,index,self)=>self.indexOf((value===index)));
+//								console.log(blah);
+							%>
+
+                            <%});%>
+						</div>
 					</div>
-					<div class="dropdown">
+					<div class="dropdown by-year">
 						<span>Year</span>
 						<div></div>
 					</div>
@@ -40,14 +48,14 @@
 			<div>
 				<ul class="contents-list">
                     <% data.media.forEach(function(media) {
-					%>
+                    %>
 					<li>
 						<div class="thumbnail-wrapper">
 							<img src="<%= media.poster %>" title="<%= media.title %>" />
 						</div>
 						<div class="info-wrapper">
-							<p><%= media.title %>(<%= media.year%>)</p>
-							<p>Genres:<%= media.genre%></p>
+							<p class="info-year"><%= media.title %>(<%= media.year%>)</p>
+							<p class="info-genre"><%= media.genre%></p>
 						</div>
 					</li>
                     <% }); %>

@@ -1,13 +1,19 @@
 /*** mixins.scss ***/
+$testimonial-control:'testimonial';
+$cta-control:'CTA Quote';
+$filterable-control:'filterable content';
 
-
+//Fonts
+@mixin setfontstyle($fontfamily,$fontstyle,$fontsize){
+  font-family:$fontfamily;
+  font-style:$fontstyle;
+  font-size: $fontsize;
+}
 //Text
-@mixin content-text(){
-  font-family: 'Roboto Slab';
-  font-style: normal;
-  font-weight: 300;
+@mixin content-text($textcolor:""){
   font-size: 0.85em;
   margin-bottom: 1em;
+  color:#{$textcolor};
 }
 //Buttons
 @mixin blue-button(){
@@ -28,7 +34,7 @@
 }
 
 //Blue Header Div
-@mixin blueheader(){
+@mixin blueheader($controlname){
   background:$blue;
   border-top:1px solid $border-color;
   border-bottom:1px solid $border-color;
@@ -43,5 +49,12 @@
   }
   a{
     text-decoration:none;
+    &:before {
+      content:$controlname;
+      font-family: 'Montserrat';
+      font-style: normal;
+      font-weight:400;
+      text-transform:capitalize;
+    }
   }
 }

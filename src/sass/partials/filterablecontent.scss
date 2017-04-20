@@ -1,35 +1,39 @@
 /* filterablecontent.scss */
-.blue-header{
-  @include blueheader();
-}
-.filterable-content-block{
-  margin:1em 0;
-  .content-wrapper{
-    width:60%;
-    margin:0 auto;
-    padding:1em;
-    border:1px solid $light-gray-border;
-    .filters-panel{
-      .row{
-        display: inline-block;
-        width: 100%;
-        padding-bottom:1em;
+.main-filterable-content {
+  .blue-header {
+    @include blueheader($filterable-control);
+  }
+  .filterable-content-block {
+    margin: 1em 0;
+    .content-wrapper {
+      width: 60%;
+      margin: 0 auto;
+      padding: 1em;
+      border: 1px solid $light-gray-border;
+      .filters-panel {
+        .row {
+          display: inline-block;
+          width: 100%;
+          padding-bottom: 1em;
 
-        >div{
-          width:auto;
-          float:left;
-          font-family: 'Montserrat';
-          font-style: normal;
-          font-weight: 700;
+          > div {
+            width: auto;
+            float: left;
+            font-family: 'Montserrat';
+            font-style: normal;
+            font-weight: 700;
 
-          &:last-child{
-            float:right;
-          }
+            &:last-child {
+              float: right;
+            }
             &.dropdown {
               padding: 0.25em 1em;
               background: $light-gray-bg;
               border-bottom: 4px solid $medium-gray;
               margin-right: 1em;
+              &:hover {
+                cursor: pointer;
+              }
               span {
                 color: $dark-gray;
                 text-transform: uppercase;
@@ -78,59 +82,69 @@
               //}
             }
 
-        }
-        //Second row
-        &.second{
-          >div{
-            margin-right:1em;
-            font-size: 0.95em;
-            label{
-              color: inherit;
-            }
-            &.clear-filters{
-              a{
-                color:$blue;
-                text-decoration: underline;
-                text-transform: uppercase;
-                transition:0.3s color ease;
-                &:hover{
-                  color:$blue-hover;
+          }
+          //Second row
+          &.second {
+            > div {
+              margin-right: 1em;
+              font-size: 0.95em;
+              label {
+                color: inherit;
+              }
+              &.clear-filters {
+                a {
+                  color: $blue;
+                  text-decoration: underline;
+                  text-transform: uppercase;
+                  transition: 0.3s color ease;
+                  font-size: 0.75em;
+
+                  &:hover {
+                    color: $blue-hover;
+                  }
                 }
               }
             }
           }
         }
-      }
-      .left-panel{
-        width:70%;
-        float:left;
-      }
-    }
-    &.list-wrapper{
-      ul.contents-list{
-        list-style-type: none;
-        display: flex;
-        flex-wrap:wrap;
-        width:100%;
-        li{
-          width: 26%;
+        .left-panel {
+          width: 70%;
           float: left;
-          padding: 1em 1.25em;
-          flex: 1 0 25%;
-          box-sizing: border-box;
-          padding: 0.75em;
-          .thumbnail-wrapper{
-            img{
-              max-width:100%;
-              height:auto;
+        }
+      }
+      &.list-wrapper {
+        ul.contents-list {
+          list-style-type: none;
+          display: flex;
+          flex-wrap: wrap;
+          width: 100%;
+          li {
+            width: 26%;
+            float: left;
+            padding: 1em 1.25em;
+            flex: 1 0 25%;
+            box-sizing: border-box;
+            padding: 0.75em;
+            .thumbnail-wrapper {
+              img {
+                max-width: 100%;
+                height: auto;
+              }
             }
-          }
-          .info-wrapper{
-            padding-top: 0.75em;
-            p{
-              font-family: 'Montserrat';
-              font-size:0.85em;
-              padding-bottom:0.5em;
+            .info-wrapper {
+              padding-top: 0.75em;
+              p[class^='info'] {
+                font-family: 'Montserrat';
+                font-size: 0.85em;
+                padding-bottom: 0.5em;
+                text-transform: capitalize;
+                &.info-genre {
+                  &:before {
+                    content: 'Genres:';
+                    margin-right: 0.25em;
+                  }
+                }
+              }
             }
           }
         }
