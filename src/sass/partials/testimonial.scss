@@ -9,23 +9,51 @@
         margin: 1em 0;
         background: $light-gray-bg;
         padding: 1.5em 1em;
+
         .content {
           width: 50%;
           margin: 0 auto;
+          position:relative;
+          border-left:2px solid $orange;
+
           @include tabletportrait{
             width:60%;
           }
-          .quote-bg {
-
+          &:before{
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            background: $orange;
+            content: '\201c';
+            display: block;
+            position: absolute;
+            left: -19px;
+            border:3px solid $white;
+            font-size: 46px;
+            text-align: center;
+            color: $white;
+          }
+          &:after{
+            width: 10px;
+            height: 10px;
+            display: block;
+            border-radius: 50%;
+            background: $orange;
+            content: '';
+            position: absolute;
+            left: -6px;
           }
           p {
             @include setfontstyle('Roboto Slab', normal, 300);
             @include content-text(inherit);
+            margin-left:1.5em;
+            padding-top: 1em;
           }
           span {
             &.author {
               @include setfontstyle('Montserrat', normal, 0.75em);
               font-weight: 700;
+              margin-left:1.5em;
             }
 
           }

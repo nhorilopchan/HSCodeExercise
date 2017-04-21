@@ -49,18 +49,23 @@ document.addEventListener('DOMContentLoaded', function() {
                 const { value } = evt.target;
                 console.log(value);
                 console.log(filterType,value);
+                // TODO - check for checked/unchecked push in an array
+                // filter.checked
 
 
                 if(filterType==="year") {
                     var hiddenMedia = document.querySelectorAll(`.contents-list li:not([data-year='${value}'])`);
                     console.log(hiddenMedia);
-                    [].forEach.call()(hiddenMedia,(item)=>{
+                    [].forEach.call(hiddenMedia,(item)=>{
                         item.classList.add('content-item-hidden');
                     });
                 }
                 else{
-                    /*var matchedMedia = document.querySelectorAll(`.contents-list li[data-year='${value}']`);
-                    console.log(matchedMedia);*/
+                    var hiddenMedia = document.querySelectorAll(`.contents-list li:not([data-genres*='${value}'])`);
+                    console.log(hiddenMedia);
+                    [].forEach.call(hiddenMedia,(item)=>{
+                        item.classList.add('content-item-hidden');
+                    });
                 }
             });
         });

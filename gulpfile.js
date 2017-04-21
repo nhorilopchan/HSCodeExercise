@@ -82,10 +82,10 @@ gulp.task('serve',['watch'], function() {
         startPath:"./build/html/pages",
         port: 8080
     });
+    gulp.watch( "./src/**/*.scss", [ 'sass' ] );
 });
 
 // The default task (called when we run `gulp` from cli)
 gulp.task('default', ['ejs','js','sass','watch', 'serve'], function() {
-    gulp.watch( "./src/**/*.scss", [ 'sass' ] );
     gulp.watch( "./src/**/*.js", [ 'js' ] );
 });
