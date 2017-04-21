@@ -18,6 +18,7 @@ var sassmixins = require('gulp-sass-to-postcss-mixins');
 var sugarss    = require('sugarss');
 var precss     = require('precss');
 var fs = require("fs");
+var cssnano = require('gulp-cssnano');
 
 gulp.task('ejs', function() {
     return gulp.src('src/views/**/*.ejs')
@@ -53,8 +54,8 @@ gulp.task('js', function() {
 });
 
 //CSS Files
-var cssSourceFiles = ['src/sass/_partials/*.scss','src/sass/*.scss','src/sass/_mixins/*.scss'
-    ,'src/sass/_variables/*.scss'
+var cssSourceFiles = ['src/sass/_partials/*.scss','src/sass/*.scss','src/sass/mixins/*.scss'
+    ,'src/sass/variables/*.scss'
 ]
 cssDest ='./build/css';
 
@@ -62,9 +63,9 @@ gulp.task('sass', function() {
     gulp.src(cssSourceFiles)
         .pipe(sassmixins())
         .pipe(sass().on('error', sass.logError))
+        .pipe(cssnano())
         .pipe(concat('styles.css'))
         .pipe(minify())
-        // .pipe(postcss([precss],{ parser: sugarss }))
         .pipe(gulp.dest(cssDest)
         );
 });
@@ -78,6 +79,7 @@ gulp.task('serve',['watch'], function() {
         server: {
             baseDir: "./"
         },
+        startPath:"./build/html/pages",
         port: 8080
     });
 });
@@ -85,4 +87,5 @@ gulp.task('serve',['watch'], function() {
 // The default task (called when we run `gulp` from cli)
 gulp.task('default', ['ejs','js','sass','watch', 'serve'], function() {
     gulp.watch( "./src/**/*.scss", [ 'sass' ] );
+    gulp.watch( "./src/**/*.js", [ 'js' ] );
 });

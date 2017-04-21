@@ -1,11 +1,11 @@
 /* main.scss */
 
 //Variables
-@import '_variables/_include_media';
-@import '_variables/colors';
+@import 'variables/include_media';
+@import 'variables/colors';
 
 //Mixins
-@import '_mixins/_mixins';
+@import 'mixins/mixins';
 
 //Partials
 @import 'partials/header';

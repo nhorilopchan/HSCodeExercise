@@ -38,6 +38,7 @@
               }
               &.dropdown {
                 margin-right: 1em;
+
                 span {
                   &.toggle {
                     color: $dark-gray;
@@ -60,7 +61,13 @@
                   }
                 }
                 .dropdown-content{
-                  @include dropdowns();
+                    @include dropdowns();
+
+                }
+                &:hover{
+                .dropdown-content{
+                  display:block;
+                }
                 }
               }
               &.search-input{
@@ -141,12 +148,13 @@
             flex-wrap: wrap;
             width: 100%;
             li {
-              width: 26%;
-              float: left;
+              max-width: 26%;
               padding: 1em 1.25em;
-              flex: 1 0 25%;
+              flex: 1;
               box-sizing: border-box;
               padding: 0.75em;
+              display: inline-block;
+
               @include tabletportrait{
                 width:100%;
               }
@@ -170,6 +178,9 @@
                     }
                   }
                 }
+              }
+              &.content-item-hidden{
+                display:none;
               }
             }
           }

@@ -2,10 +2,9 @@
 
 document.addEventListener('DOMContentLoaded', function() {
     if(document.querySelectorAll('.filterable-content-block').length){
-
         //Adds search icon to the search input field
         document.addEventListener('click', (evt) => {
-            console.log('click');
+            //Hide the dropdownlist on click outside the input box
             if(document.querySelector('.search-list').classList.contains('active')){
                 document.querySelector('.search-list').classList.remove("active");
             }
@@ -15,14 +14,15 @@ document.addEventListener('DOMContentLoaded', function() {
         searchinputel.insertBefore(eldiv,searchinputel.firstChild);
         eldiv.className += " search icon";
 
-        //Search By Title
+        //Search By Title - Autocomplete
         var searchinput = document.querySelector('#search-input');
         var items = document.querySelector('.search-list').getElementsByTagName('li');
 
-        searchinput.addEventListener('keyup', function(ev) {
+        searchinput.addEventListener('keyup', function(evt) {
             var text = ev.target.value;
             var pat = new RegExp(text, 'i');
             document.querySelector('.search-list').className+=" active";
+            //If input field is empty, hide the list
             if(text.length<1){
                 if(document.querySelector('.search-list').classList.contains('active')){
                     document.querySelector('.search-list').classList.remove("active");
@@ -38,5 +38,32 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+
+        //Dropdowns
+        const filters = document.querySelectorAll('.filter-list');
+        const media = document.querySelectorAll('.contents-list li');
+
+        [].forEach.call(filters, filter =>{
+            filter.addEventListener('change',evt => {
+                var filterType = evt.target.getAttribute('data-filter');
+                const { value } = evt.target;
+                console.log(value);
+                console.log(filterType,value);
+
+
+                if(filterType==="year") {
+                    var hiddenMedia = document.querySelectorAll(`.contents-list li:not([data-year='${value}'])`);
+                    console.log(hiddenMedia);
+                    [].forEach.call()(hiddenMedia,(item)=>{
+                        item.classList.add('content-item-hidden');
+                    });
+                }
+                else{
+                    /*var matchedMedia = document.querySelectorAll(`.contents-list li[data-year='${value}']`);
+                    console.log(matchedMedia);*/
+                }
+            });
+        });
+
     }
 })
