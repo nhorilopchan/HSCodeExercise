@@ -5,8 +5,8 @@ document.addEventListener('DOMContentLoaded', () => {
 
         //On button click - fetch and display a Joke
         var fetchButton = document.getElementById('fetchBtn');
-        fetchButton.addEventListener('click', function(e) {
-           e.preventDefault();
+        fetchButton.addEventListener('click', event => {
+            event.preventDefault();
             fetchmeajoke();
         })
 

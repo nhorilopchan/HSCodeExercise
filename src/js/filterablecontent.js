@@ -96,5 +96,30 @@ document.addEventListener('DOMContentLoaded', function() {
         const radiobtnClass = '.filter-radio';
         const radiobtns = document.querySelectorAll(radiobtnClass);
         showHideMedia(radiobtns,radiobtnClass);
+
+        //Clear All Filters
+        var clearFilterButton = document.getElementById('clearfilters');
+        clearFilterButton.addEventListener('click', evt => {
+            evt.preventDefault();
+            //Show all media items
+            var mediaListItems = document.querySelectorAll('.contents-list li');
+            [].forEach.call(mediaListItems, mediaListItem => {
+                if(mediaListItem.classList.contains('content-item-hidden')){
+                    mediaListItem.classList.remove('content-item-hidden');
+                }
+            });
+
+            //Clear all Filter Controls
+            //Checkboxes
+            var checkBoxes = document.querySelectorAll('.filter-list:checked');
+            [].forEach.call(checkBoxes,(checkBox)=>{
+                checkBox.checked = false;
+            });
+            //Radiobuttons
+            var radioButtons = document.querySelectorAll('.filter-radio:checked');
+            [].forEach.call(radioButtons,(radioButton)=>{
+                radioButton.checked = false;
+            });
+        });
     }
 })
