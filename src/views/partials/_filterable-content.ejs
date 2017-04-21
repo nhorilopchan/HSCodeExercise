@@ -12,7 +12,7 @@ function getUniqueValues(array, key) {
 
 	const fullArray = array.reduce((previous, item) => {
 
-	    if(typeof item[key] === "string") {
+		if(typeof item[key] === "string") {
 			console.log(item[key]);
 			return [...previous,item[key]];
 		}
@@ -38,36 +38,36 @@ function getUniqueValues(array, key) {
 				<div class="row first">
 					<div class="dropdown by-genre">
 						<span class="toggle">Genre</span>
-							<div class="dropdown-content">
-								<ul id="ddl-by-genre">
-									<!-- TODO- FIX THIS -->
-									<%
-									var uniqueGenres = getUniqueValues(data.media, "genre").sort();
-									uniqueGenres.forEach(function (genre,index) {
+						<div class="dropdown-content">
+							<ul id="ddl-by-genre">
+								<!-- TODO- FIX THIS -->
+                                <%
+								var uniqueGenres = getUniqueValues(data.media, "genre").sort();
+								uniqueGenres.forEach(function (genre,index) {
 
- 									%>
-									<li><input type="checkbox" id=<%=`chkGenre${index}`%> class="filter-list"
-											   data-filter="genre" value="<%=genre%>"/><label
-												for=<%=`chkGenre${index}`%>>
-											<%=genre%></label></li>
-									<%});%>
-								</ul>
-							</div>
+                                %>
+								<li><input type="checkbox" id=<%=`chkGenre${index}`%> class="filter-list"
+										   data-filter="genre" value="<%=genre%>"/><label
+											for=<%=`chkGenre${index}`%>>
+                                        <%=genre%></label></li>
+                                <%});%>
+							</ul>
+						</div>
 					</div>
 					<div class="dropdown by-year">
 						<span class="toggle">Year</span>
 						<div class="dropdown-content">
 
-						<ul id="ddl-by-year">
-						<% var uniqueYears= getUniqueValues(data.media, "year").sort();
-						uniqueYears.forEach(function(year,index) {
-                        %>
-							<li><input type="checkbox" id=<%=`chkYear${index}`%> class="filter-list" data-filter="year"
-									   value="<%=year%>"/><label
-										for=`<%=`chkYear${index}`%>><%=
-										year%></label></li>
-                        <%});%>
-						</ul>
+							<ul id="ddl-by-year">
+                                <% var uniqueYears= getUniqueValues(data.media, "year").sort();
+								uniqueYears.forEach(function(year,index) {
+                                %>
+								<li><input type="checkbox" id=<%=`chkYear${index}`%> class="filter-list" data-filter="year"
+										   value="<%=year%>"/><label
+											for=<%=`chkYear${index}`%>><%=
+											year%></label></li>
+                                <%});%>
+							</ul>
 						</div>
 					</div>
 					<div id="search-input" class="search-input">
@@ -83,11 +83,11 @@ function getUniqueValues(array, key) {
 				</div>
 				<div class="row second">
 					<div>
-						<input type="radio" name="filter-radio">
+						<input type="radio" name="filterradio" data-filter="type" value="movie" class="filter-radio">
 						<label>Movies</label>
 					</div>
 					<div>
-						<input type="radio" name="filter-radio">
+						<input type="radio" name="filterradio" data-filter="type" value="book" class="filter-radio">
 						<label>Books</label>
 					</div>
 					<div class="clear-filters">
@@ -104,7 +104,7 @@ function getUniqueValues(array, key) {
 				<ul class="contents-list">
                     <% data.media.forEach(function(media) {
                     %>
-					<li data-year="<%= media.year%>" data-genres="<%= media.genre%>">
+					<li data-filter="<%= media.year%> <%= media.genre%> <%= media.type %>">
 						<div class="thumbnail-wrapper">
 							<img src="<%= media.poster %>" title="<%= media.title %>" />
 						</div>

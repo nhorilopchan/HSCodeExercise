@@ -40,82 +40,61 @@ document.addEventListener('DOMContentLoaded', function() {
         });
 
         //Dropdowns
-        const filters = document.querySelectorAll('.filter-list');
-        const media = document.querySelectorAll('.contents-list li');
+        function fadeIn(el) {
+            el.style.opacity = 0;
 
-        var checkedItems = new Array();
-        var uncheckedItems = new Array();
-        [].forEach.call(filters, filter =>{
-            filter.addEventListener('change',evt => {
-                var filterType = evt.target.getAttribute('data-filter');
-                const { value } = evt.target;
-                console.log(value);
-                console.log(filterType,value);
-                var selecteditem = [{
-                    filtertype:'',
-                    filterval:''
-                }];
+            var last = +new Date();
+            var tick = function() {
+                el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
+                last = +new Date();
 
-                if(filter.checked) {
-                    selecteditem.filtertype = filterType;
-                    selecteditem.filterval = value;
-                    checkedItems.push(selecteditem);
-                    console.log("CHECKED");
-                    console.log(checkedItems);
+                if (+el.style.opacity < 1) {
+                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
                 }
-                else{
-                    selecteditem.filtertype = filterType;
-                    selecteditem.filterval = value;
-                    const index = checkedItems.indexOf(selecteditem);
-                    console.log("INDEX");
-                    console.log(index);
-                    checkedItems.splice(index, 1);
-                    console.log("REMOVED CHECKED");
-                    console.log(checkedItems);
-                }
-                // if(!document.querySelectorAll('.filter-list').checked){
-                //     console.log()
-                //     media.classList.remove('content-item-hidden');
-                // }
+            };
 
-                if(filterType==="year") {
+            tick();
+        }
 
-                        var hiddenMedia = document.querySelectorAll(`.contents-list li:not([data-year='${value}'])`);
-                        console.log("YEAR");
-                        console.log(hiddenMedia);
-                        [].forEach.call(hiddenMedia,(item)=>{
-                            console.log("EACH ITEM");
-                            console.log(item);
-                            [].forEach.call(checkedItems,(checkitem)=>{
-                                console.log(checkitem);
-                                if(item.getAttribute('data-year')==checkitem.filterval){
-                                    console.log('YAY');
-                                }
-                            //item.classList.add('content-item-visible');
+        function showHideMedia(mediaItems,controlClass){
 
-                            // if( item.classList.contains('content-item-hidden')) {
-                            //     item.classList.remove('content-item-hidden');
-                            // }
-                            // else{
-                            //     item.classList.add('content-item-hidden');
-                            // }
+            [].forEach.call(mediaItems, mediaItem => {
+                mediaItem.addEventListener('change', evt => {
+                    const { value } = evt.target;
+                    console.log("FILTER VALUE");
+                    console.log({ value });
+                    const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
+                    if (filtercontrols.length > 0) {
+                        var mediaListItems = document.querySelectorAll('.contents-list li');
+                        [].forEach.call(mediaListItems, mediaListItem => {
+                            //product.style.opacity = '0';
+                            mediaListItem.classList.add('content-item-hidden');
                         });
-                    });
-                }
-                else{
-                    var hiddenMedia = document.querySelectorAll(`.contents-list li:not([data-genres*='${value}'])`);
-                    console.log(hiddenMedia);
-                    [].forEach.call(hiddenMedia,(item)=>{
-                        if(filter.checked) {
-                            item.classList.add('content-item-hidden');
-                        }
-                        else{
-                            item.classList.remove('content-item-hidden');
-                        }
-                    });
-                }
+                        [].forEach.call(filtercontrols, filtercontrol => {
+                            const matchingItems = document.querySelectorAll(`.contents-list li[data-filter*="${value}"]`);
+                            [].forEach.call(matchingItems, matchingItem => {
+                                //fadeIn(matchingProduct);
+                                matchingItem.classList.remove('content-item-hidden');
+                            });
+                        });
+                    } else {
+                        const matchingItems = document.querySelectorAll(`.contents-list li`);
+                        [].forEach.call(matchingItems, matchingItem => {
+                            //fadeIn(productItem);
+                            matchingItem.classList.remove('content-item-hidden');
+                        });
+                    }
+                });
             });
-        });
+        }
+        //By Genre and Year - Dropdowns
+        const checkboxClass = '.filter-list';
+        const checkboxes = document.querySelectorAll(checkboxClass);
+        showHideMedia(checkboxes,checkboxClass);
 
+        //By Type - Radiobuttons
+        const radiobtnClass = '.filter-radio';
+        const radiobtns = document.querySelectorAll(radiobtnClass);
+        showHideMedia(radiobtns,radiobtnClass);
     }
 })
