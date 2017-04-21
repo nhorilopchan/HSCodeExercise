@@ -7,7 +7,7 @@
 
     &.content-wrapper {
       display: table;
-      margin: 1em 0;
+      margin: 2em 0;
       background: $dark-bg;
       padding: 1.5em 0;
       width:100%;
@@ -17,7 +17,7 @@
       .content-block {
         margin: 0 auto;
         display: flex;
-        width: 75%;
+        width: 72%;
         @include tabletportrait{
           width:100%;
           flex-direction: row;
@@ -29,12 +29,12 @@
 
         p {
           @include setfontstyle($isRoboto, normal, 300);
-          @include content-text($white);
+          @include content-text(0.85em,$white);
           color: $white;
           width: 88%;
           vertical-align: middle;
           line-height: 2;
-          padding-right: 1em;
+          padding:1.5em 1em 0 0;
 
           @include tabletportrait{
             width:100%;

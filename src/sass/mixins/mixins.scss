@@ -15,8 +15,8 @@ $isRoboto:'Roboto Slab';
   font-size: $fontsize;
 }
 //Text
-@mixin content-text($textcolor:""){
-  font-size: 0.85em;
+@mixin content-text($fontsize,$textcolor:""){
+  font-size: $fontsize;
   color:#{$textcolor};
 }
 //Buttons
@@ -25,14 +25,18 @@ $isRoboto:'Roboto Slab';
   font-style: normal;
   font-weight: 400;
   text-align: center;
-  padding: 1em;
+  padding: 1em 2.25em;
   background: $blue;
   border-color: $blue;
   color: $white;
   text-transform: uppercase;
-  font-size:0.65em;
+  font-size:0.85em;
   border-radius: 0.5em;
-  transtion:all 0.3s ease;
+  -webkit-transition: all 0.3s ease;
+  -moz-transition: all 0.3s ease;
+  -ms-transition: all 0.3s ease;
+  -o-transition: all 0.3s ease;
+  transition: all 0.3s ease;
   cursor: pointer;
   &:hover{
     background:$blue-hover;
@@ -47,8 +51,8 @@ $isRoboto:'Roboto Slab';
   border-top:1px solid $border-color;
   border-bottom:1px solid $border-color;
   transition:0.3s all ease;
-  padding:1em 6em;
-  font-size:1.5em;
+  padding: 1.1em 7.5em;
+  font-size: 2em;
 
   @include phoneportrait{
     padding:1em 2em;

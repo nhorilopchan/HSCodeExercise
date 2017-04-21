@@ -19,43 +19,30 @@ document.addEventListener('DOMContentLoaded', function() {
         var items = document.querySelector('.search-list').getElementsByTagName('li');
 
         searchinput.addEventListener('keyup', function(evt) {
-            var text = evt.target.value;
-            var pat = new RegExp(text, 'i');
-            document.querySelector('.search-list').className+=" active";
+            const { value } = evt.target;
+            var pat = new RegExp(value, 'i');
+            var searchList = document.querySelector('.search-list');
+            if(!searchList.classList.contains('active')) {
+                searchList.classList.add('active');
+            }
             //If input field is empty, hide the list
-            if(text.length<1){
-                if(document.querySelector('.search-list').classList.contains('active')){
-                    document.querySelector('.search-list').classList.remove("active");
+            if(value.length < 1){
+                if(document.querySelector('.search-list').className.contains('active')){
+                    document.querySelector('.search-list').className.replace(/\s+?active/, '');
                 }
             }
-            for (var i=0; i < items.length; i++) {
+            for (var i = 0; i < items.length; i++) {
                 var item = items[i];
                 if (pat.test(item.innerText)) {
-                    item.className = item.className.replace(/\s+?hidden/,'');
+                    item.className = item.className.replace(/\s+?hidden/, '');
                 }
-                else {
+                else if(!item.classList.contains('hidden')) {
                     item.className = item.className + ' hidden';
                 }
             }
         });
 
         //Dropdowns
-        function fadeIn(el) {
-            el.style.opacity = 0;
-
-            var last = +new Date();
-            var tick = function() {
-                el.style.opacity = +el.style.opacity + (new Date() - last) / 400;
-                last = +new Date();
-
-                if (+el.style.opacity < 1) {
-                    (window.requestAnimationFrame && requestAnimationFrame(tick)) || setTimeout(tick, 16);
-                }
-            };
-
-            tick();
-        }
-
         function showHideMedia(mediaItems,controlClass){
 
             [].forEach.call(mediaItems, mediaItem => {
@@ -65,20 +52,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     if (filtercontrols.length > 0) {
                         var mediaListItems = document.querySelectorAll('.contents-list li');
                         [].forEach.call(mediaListItems, mediaListItem => {
-                            //product.style.opacity = '0';
                             mediaListItem.classList.add('content-item-hidden');
                         });
                         [].forEach.call(filtercontrols, filtercontrol => {
                             const matchingItems = document.querySelectorAll(`.contents-list li[data-filter*="${value}"]`);
                             [].forEach.call(matchingItems, matchingItem => {
-                                //fadeIn(matchingProduct);
                                 matchingItem.classList.remove('content-item-hidden');
                             });
                         });
                     } else {
                         const matchingItems = document.querySelectorAll(`.contents-list li`);
                         [].forEach.call(matchingItems, matchingItem => {
-                            //fadeIn(productItem);
                             matchingItem.classList.remove('content-item-hidden');
                         });
                     }
