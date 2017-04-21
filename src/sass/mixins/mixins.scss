@@ -10,7 +10,7 @@ $isRoboto:'Roboto Slab';
 
 //Fonts
 @mixin setfontstyle($fontfamily,$fontstyle,$fontsize){
-  font-family:$fontfamily;
+  font-family:#{$fontfamily};
   font-style:$fontstyle;
   font-size: $fontsize;
 }
@@ -21,7 +21,7 @@ $isRoboto:'Roboto Slab';
 }
 //Buttons
 @mixin blue-button(){
-  font-family: $isMontserrat;
+  font-family: #{$isMontserrat};
   font-style: normal;
   font-weight: 400;
   text-align: center;
@@ -63,7 +63,7 @@ $isRoboto:'Roboto Slab';
     text-decoration:none;
     &:before {
       content:$controlname;
-      font-family: $isMontserrat;
+      font-family: #{$isMontserrat};
       font-style: normal;
       font-weight:400;
       text-transform:capitalize;

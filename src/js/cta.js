@@ -1,26 +1,31 @@
 /* CTA Scripts
  */
-document.addEventListener('DOMContentLoaded', () => {
-    if(document.querySelectorAll('.cta-block').length){
+if(document.querySelectorAll('.cta-block').length) {
 
-        //On button click - fetch and display a Joke
-        var fetchButton = document.getElementById('fetchBtn');
-        fetchButton.addEventListener('click', event => {
-            event.preventDefault();
-            fetchmeajoke();
-        })
+    //On button click - fetch and display a Joke
+    const fetchButton = document.getElementById('fetchBtn');
+    const jokeContainer = document.getElementById('joke');
+    fetchButton.addEventListener('click', event => {
+        event.preventDefault();
+        fetchmeajoke();
+    });
 
-        function fetchmeajoke(){
-            var httpRequest = new XMLHttpRequest()
-            httpRequest.onreadystatechange = function (data) {
-                // code
-                console.log(data.srcElement.response);
-                var outputjoke = JSON.parse(data.srcElement.response);
-                document.getElementById('joke').innerHTML = JSON.stringify(outputjoke.value.joke);
+    function fetchmeajoke() {
+
+        const request = new XMLHttpRequest();
+        request.open('GET', '//api.icndb.com/jokes/random?escape=javascript', true);
+
+        request.onload = function () {
+            if (request.status >= 200 && request.status < 400) {
+                const {response} = request;
+                jokeContainer.innerText = JSON.parse(response).value.joke;
+            } else {
+                console.err('Error retrieving data');
             }
-            httpRequest.open('GET', '//api.icndb.com/jokes/random');
-            httpRequest.send();
-
-        }
+        };
+        request.onerror = function () {
+            console.err('Error reaching server');
+        };
+        request.send();
+    }
 }
-});

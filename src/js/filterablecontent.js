@@ -61,8 +61,6 @@ document.addEventListener('DOMContentLoaded', function() {
             [].forEach.call(mediaItems, mediaItem => {
                 mediaItem.addEventListener('change', evt => {
                     const { value } = evt.target;
-                    console.log("FILTER VALUE");
-                    console.log({ value });
                     const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
                     if (filtercontrols.length > 0) {
                         var mediaListItems = document.querySelectorAll('.contents-list li');

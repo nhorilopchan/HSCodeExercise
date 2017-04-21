@@ -112,6 +112,22 @@
                   padding: 0.5em 1em;
                   @include tabletportrait {
                     width: 100%;
+                    &::-webkit-input-placeholder { /* Chrome/Opera/Safari */
+                      color: $dark-gray;
+                      @include setfontstyle($isMontserrat,'normal',400);
+                    }
+                    &::-moz-placeholder { /* Firefox 19+ */
+                      color: $dark-gray;
+                      @include setfontstyle($isMontserrat,'normal',400);
+                    }
+                    &:-ms-input-placeholder { /* IE 10+ */
+                      color: $dark-gray;
+                      @include setfontstyle($isMontserrat,'normal',400);
+                    }
+                    &:-moz-placeholder { /* Firefox 18- */
+                      color: $dark-gray;
+                      @include setfontstyle($isMontserrat,'normal',400);
+                    }
                   }
                 }
                 .hidden{
