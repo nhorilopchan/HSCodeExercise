@@ -8,4 +8,4 @@ In a command line interface,
 2. `npm install`
 3. `gulp`
 
-A browser window opens at `http://localhost:8080`.
+A browser window opens at `http://localhost:8080/build/html/pages`.
