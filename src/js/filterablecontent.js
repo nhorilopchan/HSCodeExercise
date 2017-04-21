@@ -43,28 +43,75 @@ document.addEventListener('DOMContentLoaded', function() {
         const filters = document.querySelectorAll('.filter-list');
         const media = document.querySelectorAll('.contents-list li');
 
+        var checkedItems = new Array();
+        var uncheckedItems = new Array();
         [].forEach.call(filters, filter =>{
             filter.addEventListener('change',evt => {
                 var filterType = evt.target.getAttribute('data-filter');
                 const { value } = evt.target;
                 console.log(value);
                 console.log(filterType,value);
-                // TODO - check for checked/unchecked push in an array
-                // filter.checked
+                var selecteditem = [{
+                    filtertype:'',
+                    filterval:''
+                }];
 
+                if(filter.checked) {
+                    selecteditem.filtertype = filterType;
+                    selecteditem.filterval = value;
+                    checkedItems.push(selecteditem);
+                    console.log("CHECKED");
+                    console.log(checkedItems);
+                }
+                else{
+                    selecteditem.filtertype = filterType;
+                    selecteditem.filterval = value;
+                    const index = checkedItems.indexOf(selecteditem);
+                    console.log("INDEX");
+                    console.log(index);
+                    checkedItems.splice(index, 1);
+                    console.log("REMOVED CHECKED");
+                    console.log(checkedItems);
+                }
+                // if(!document.querySelectorAll('.filter-list').checked){
+                //     console.log()
+                //     media.classList.remove('content-item-hidden');
+                // }
 
                 if(filterType==="year") {
-                    var hiddenMedia = document.querySelectorAll(`.contents-list li:not([data-year='${value}'])`);
-                    console.log(hiddenMedia);
-                    [].forEach.call(hiddenMedia,(item)=>{
-                        item.classList.add('content-item-hidden');
+
+                        var hiddenMedia = document.querySelectorAll(`.contents-list li:not([data-year='${value}'])`);
+                        console.log("YEAR");
+                        console.log(hiddenMedia);
+                        [].forEach.call(hiddenMedia,(item)=>{
+                            console.log("EACH ITEM");
+                            console.log(item);
+                            [].forEach.call(checkedItems,(checkitem)=>{
+                                console.log(checkitem);
+                                if(item.getAttribute('data-year')==checkitem.filterval){
+                                    console.log('YAY');
+                                }
+                            //item.classList.add('content-item-visible');
+
+                            // if( item.classList.contains('content-item-hidden')) {
+                            //     item.classList.remove('content-item-hidden');
+                            // }
+                            // else{
+                            //     item.classList.add('content-item-hidden');
+                            // }
+                        });
                     });
                 }
                 else{
                     var hiddenMedia = document.querySelectorAll(`.contents-list li:not([data-genres*='${value}'])`);
                     console.log(hiddenMedia);
                     [].forEach.call(hiddenMedia,(item)=>{
-                        item.classList.add('content-item-hidden');
+                        if(filter.checked) {
+                            item.classList.add('content-item-hidden');
+                        }
+                        else{
+                            item.classList.remove('content-item-hidden');
+                        }
                     });
                 }
             });

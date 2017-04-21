@@ -45,11 +45,15 @@
                     color: $dark-gray;
                     text-transform: uppercase;
                     font-size: 0.85em;
+                    margin-bottom:1.5em;
                     font-weight: 700;
                     padding: .5em 1.5em;
                     background: $light-gray-bg;
                     border-bottom: 4px solid $medium-gray;
-
+                    @include tabletportrait{
+                      width:100%;
+                      text-align:center;
+                    }
                     &:hover {
                       cursor: pointer;
                     }

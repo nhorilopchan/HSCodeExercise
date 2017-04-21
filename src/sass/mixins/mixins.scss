@@ -47,6 +47,7 @@ $isRoboto:'Roboto Slab';
   border-bottom:1px solid $border-color;
   transition:0.3s all ease;
   padding:1em 6em;
+  font-size:1.5em;
   @include tabletportrait{
 
   }
@@ -78,7 +79,6 @@ $isRoboto:'Roboto Slab';
     border:1px solid $medium-gray;
     position: absolute;
     background: $white;
-    margin-top:1em;
 
     li{
       padding:1em;
