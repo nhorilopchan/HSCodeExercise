@@ -24,6 +24,7 @@ $isRoboto:'Roboto Slab';
   font-family: $isMontserrat;
   font-style: normal;
   font-weight: 400;
+  text-align: center;
   padding: 1em;
   background: $blue;
   border-color: $blue;
@@ -48,8 +49,9 @@ $isRoboto:'Roboto Slab';
   transition:0.3s all ease;
   padding:1em 6em;
   font-size:1.5em;
-  @include tabletportrait{
 
+  @include phoneportrait{
+    padding:1em 2em;
   }
   &:hover{
     background:$blue-hover;

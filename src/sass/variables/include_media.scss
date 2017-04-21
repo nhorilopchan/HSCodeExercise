@@ -16,6 +16,11 @@ $widescreen: 1550px;
 $greaterorequal:'>=';
 $lesserorequal:'<=';
 
+@mixin phoneportrait{
+  @media (min-width: #{$xs-phone}-1px) and (max-width: #{$xxl-phone - 1px}) {
+    @content;
+  }
+}
 @mixin tabletportrait {
   @media (min-width: #{$xs-phone}-1px) and (max-width: #{$tablet-xl - 1px}) {
     @content;
