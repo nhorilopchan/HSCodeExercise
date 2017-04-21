@@ -6,13 +6,16 @@
   .cta-block {
 
     &.content-wrapper {
-      display: inline-block;
+      display: table;
       margin: 1em 0;
       background: $dark-bg;
-      padding: 1.5em 1em;
+      padding: 1.5em 0;
+      width:100%;
+
       .content-block {
-        width: 75%;
         margin: 0 auto;
+        display: flex;
+        width: 75%;
         @include tabletportrait{
           width:100%;
         }
@@ -21,13 +24,14 @@
         }
 
         p {
-          @include setfontstyle('Roboto Slab', normal, 300);
+          @include setfontstyle($isRoboto, normal, 300);
           @include content-text($white);
           color: $white;
-          display: inline-block;
           width: 88%;
-          float: left;
+          vertical-align: middle;
+          line-height: 2;
           padding-right: 1em;
+
           @include tabletportrait{
             width:100%;
             float:none;
@@ -38,11 +42,7 @@
           &.button {
             @include blue-button();
 
-            display: inline-block;
-            position: relative;
-            -webkit-transform: translateY(100%);
-            -ms-transform: translateY(100%);
-            transform: translateY(100%);
+            align-self: center;
             @include tabletportrait{
               transform: none;
             }

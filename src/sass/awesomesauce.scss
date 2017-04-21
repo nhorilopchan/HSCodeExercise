@@ -1,9 +1,5 @@
 /* awesomesauce.scss */
 
-$breakpoints: ( 'xs-phone': 320px,'sm-phone':375px, 'phone': 480px, 'xl-phone': 560px, 'xxl-phone':736px, 'tablet': 768px, 'tablet-x':800px,'tablet-xl':992px,'desktop': 1024px, 'desktop-x': 1300px, 'widescreen': 1550px );
-// keywords
-$media-expressions: ( 'screen': 'screen', 'print': 'print', 'handheld': 'handheld', 'landscape': '(orientation: landscape)',na 'portrait': '(orientation: portrait)', 'retina2x': '(-webkit-min-device-pixel-ratio: 1.5), (min-resolution: 144dpi)', 'retina3x': '(-webkit-min-device-pixel-ratio: 2.5), (min-resolution: 240dpi)' );
-
 //Common Styes
 html, body, div, span, applet, object, iframe, h1, h2, h3, h4, h5, h6, p, blockquote, pre, a, abbr, acronym, address, big, cite, code, del, dfn, em, img, ins, kbd, q, s, samp, small, strike, strong, sub, sup, tt, var, b, u, i, center, dl, dt, dd, ol, ul, li, fieldset, form, label, legend, table, caption, tbody, tfoot, thead, tr, th, td, article, aside, canvas, details, embed, figure, figcaption, footer, header, hgroup, menu, nav, picture, output, ruby, section, summary, time, mark, audio, video {
   margin: 0;

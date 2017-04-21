@@ -109,8 +109,8 @@ function getUniqueValues(array, key) {
 							<img src="<%= media.poster %>" title="<%= media.title %>" />
 						</div>
 						<div class="info-wrapper">
-							<p class="info-year"><%= media.title %>(<%= media.year%>)</p>
-							<p class="info-genre"><%= media.genre%></p>
+							<p class="info-year"><%= media.title %> (<%= media.year%>)</p>
+							<p class="info-genre"><%= media.genre.join(', ')%></p>
 						</div>
 					</li>
                     <% }); %>

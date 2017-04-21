@@ -23,7 +23,7 @@
             > div {
               width: auto;
               float: left;
-              font-family: 'Montserrat';
+              font-family: $isMontserrat;
               font-style: normal;
               font-weight: 700;
               @include tabletportrait{
@@ -37,15 +37,16 @@
                 }
               }
               &.dropdown {
-                margin-right: 1em;
+                margin-right: 1.25em;
 
                 span {
                   &.toggle {
+                    display:inline-block;
                     color: $dark-gray;
                     text-transform: uppercase;
                     font-size: 0.85em;
                     font-weight: 700;
-                    padding: 0.25em 1em;
+                    padding: .5em 1.5em;
                     background: $light-gray-bg;
                     border-bottom: 4px solid $medium-gray;
 
@@ -61,17 +62,22 @@
                   }
                 }
                 .dropdown-content{
-                    @include dropdowns();
-
+                  display:none;
+                  //margin-top:1.5em;
+                  ul {
+                    @include dropdowns($isdropdown);
+                  }
                 }
                 &:hover{
                 .dropdown-content{
                   display:block;
+
                 }
                 }
               }
               &.search-input{
                 position:relative;
+                display:inline-block;
 
                 .search.icon{
                   right: 0;
@@ -108,7 +114,7 @@
                   display:none;
                 }
                 ul.search-list{
-                 @include dropdowns();
+                 @include dropdowns($isautocomplete);
                 }
                }
             }
@@ -148,12 +154,9 @@
             flex-wrap: wrap;
             width: 100%;
             li {
-              max-width: 26%;
+             width:33.33%;
               padding: 1em 1.25em;
-              flex: 1;
               box-sizing: border-box;
-              padding: 0.75em;
-              display: inline-block;
 
               @include tabletportrait{
                 width:100%;
@@ -167,7 +170,22 @@
               .info-wrapper {
                 padding-top: 0.75em;
                 p[class^='info'] {
-                  font-family: 'Montserrat';
+                  font-family: $isMontserrat;
+                  font-size: 0.85em;
+                  padding-bottom: 0.5em;
+                  text-transform: capitalize;
+                  &.info-genre {
+                    &:before {
+                      content: 'Genres:';
+                      margin-right: 0.25em;
+                    }
+                  }
+                }
+              }
+              .info-wrapper {
+                padding-top: 0.75em;
+                p[class^='info'] {
+                  font-family: $isMontserrat;
                   font-size: 0.85em;
                   padding-bottom: 0.5em;
                   text-transform: capitalize;

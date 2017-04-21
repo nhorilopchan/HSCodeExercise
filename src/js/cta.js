@@ -1,6 +1,6 @@
 /* CTA Scripts
  */
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', () => {
     if(document.querySelectorAll('.cta-block').length){
 
         //On button click - fetch and display a Joke
@@ -16,10 +16,10 @@ document.addEventListener('DOMContentLoaded', function() {
                 // code
                 console.log(data.srcElement.response);
                 var outputjoke = JSON.parse(data.srcElement.response);
-                document.getElementById('joke').innerText = outputjoke.value.joke;
+                document.getElementById('joke').innerHTML = JSON.stringify(outputjoke.value.joke);
             }
-            httpRequest.open('GET', '//api.icndb.com/jokes/random')
-            httpRequest.send()
+            httpRequest.open('GET', '//api.icndb.com/jokes/random');
+            httpRequest.send();
 
         }
 }

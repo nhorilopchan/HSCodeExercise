@@ -1,7 +1,12 @@
 /*** mixins.scss ***/
+//Common Vars
 $testimonial-control:'testimonial';
 $cta-control:'CTA Quote';
 $filterable-control:'filterable content';
+$isautocomplete:'is-autocomplete';
+$isdropdown:'is-dropdown';
+$isMontserrat:'Montserrat';
+$isRoboto:'Roboto Slab';
 
 //Fonts
 @mixin setfontstyle($fontfamily,$fontstyle,$fontsize){
@@ -12,12 +17,11 @@ $filterable-control:'filterable content';
 //Text
 @mixin content-text($textcolor:""){
   font-size: 0.85em;
-  margin-bottom: 1em;
   color:#{$textcolor};
 }
 //Buttons
 @mixin blue-button(){
-  font-family: 'Montserrat';
+  font-family: $isMontserrat;
   font-style: normal;
   font-weight: 400;
   padding: 1em;
@@ -56,7 +60,7 @@ $filterable-control:'filterable content';
     text-decoration:none;
     &:before {
       content:$controlname;
-      font-family: 'Montserrat';
+      font-family: $isMontserrat;
       font-style: normal;
       font-weight:400;
       text-transform:capitalize;
@@ -65,8 +69,28 @@ $filterable-control:'filterable content';
 }
 
 //Dropdown
-@mixin dropdowns(){
-  display:none;
+@mixin dropdowns($controltype){
+  @if($controltype == $isautocomplete) {
+    display:none;
+
+  }@else {
+    display:block;
+    border:1px solid $medium-gray;
+    position: absolute;
+    background: $white;
+    margin-top:1em;
+
+    li{
+      padding:1em;
+      border-bottom:1px solid $medium-gray;
+      color: $dark-gray;
+
+      label{
+        text-transform: uppercase;
+        @include setfontstyle($isMontserrat,'normal',400);
+      }
+    }
+  }
   font-size:0.75em;
   list-style-type: none;
   transition:0.3s display ease;
@@ -85,6 +109,10 @@ $filterable-control:'filterable content';
           color: $blue-hover;
         }
       }
+      label{
+        text-transform: capitalize;
+      }
     }
   }
+
 }

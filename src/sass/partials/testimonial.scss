@@ -44,7 +44,7 @@
             left: -6px;
           }
           p {
-            @include setfontstyle('Roboto Slab', normal, 300);
+            @include setfontstyle($isRoboto, normal, 300);
             @include content-text(inherit);
             margin-left:1.5em;
             padding-top: 1em;
