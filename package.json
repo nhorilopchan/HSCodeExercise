@@ -2,11 +2,11 @@
   "name": "hubspot-code-exercise",
   "version": "1.0.0",
   "description": "HubSpot Code Exercise",
-  "main": "./build/index.js",
+  "main": "./build/scripts/scripts.js",
   "scripts": {
-    "start": "node build/js/index.js"
+    "start": "gulp"
   },
-  "author": "HubSpot Applicant",
+  "author": "Nhori Lopchan Tamang",
   "license": "ISC",
   "private": true,
   "devDependencies": {
