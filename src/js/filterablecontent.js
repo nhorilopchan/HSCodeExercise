@@ -3,7 +3,7 @@
 document.addEventListener('DOMContentLoaded', function() {
     if(document.querySelectorAll('.filterable-content-block').length){
         //Adds search icon to the search input field
-        document.addEventListener('click', (evt) => {
+        document.addEventListener('click', function() {
             //Hide the dropdownlist on click outside the input box
             if(document.querySelector('.search-list').classList.contains('active')){
                 document.querySelector('.search-list').classList.remove("active");
@@ -19,7 +19,7 @@ document.addEventListener('DOMContentLoaded', function() {
         var items = document.querySelector('.search-list').getElementsByTagName('li');
 
         searchinput.addEventListener('keyup', function(evt) {
-            var text = ev.target.value;
+            var text = evt.target.value;
             var pat = new RegExp(text, 'i');
             document.querySelector('.search-list').className+=" active";
             //If input field is empty, hide the list
