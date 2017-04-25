@@ -14,6 +14,19 @@ document.addEventListener('DOMContentLoaded', function() {
         searchinputel.insertBefore(eldiv,searchinputel.firstChild);
         eldiv.className += " search icon";
 
+        //Search By Genre/Year Toggle on click
+        var toggleControls = document.querySelectorAll('.toggle');
+        [].forEach.call(toggleControls,toggleControl => {
+            toggleControl.addEventListener('click',evt=>{
+
+                const el = evt.target;
+                //Toggle CssClass on controls
+                toggleClass(el,'expanded');
+                var next = el.nextElementSibling;
+                //Toggle CssClass on Dropdowns
+                toggleClass(next,'show');
+            });
+        });
         //Search By Title - Autocomplete
         var searchinput = document.querySelector('#search-input');
         var items = document.querySelector('.search-list').getElementsByTagName('li');
@@ -41,7 +54,22 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+        //Toggle CssClasses
+        function toggleClass(control,className){
+            if (control.classList) {
+                control.classList.toggle(className);
+            } else {
+                var classes = control.className.split(' ');
+                var existingIndex = classes.indexOf(className);
 
+                if (existingIndex >= 0)
+                    classes.splice(existingIndex, 1);
+                else
+                    classes.push(className);
+
+                control.className = classes.join(' ');
+            }
+        }
         //Dropdowns
         function showHideMedia(mediaItems,controlClass){
 

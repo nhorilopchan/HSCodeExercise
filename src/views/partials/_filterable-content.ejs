@@ -63,7 +63,9 @@ function getUniqueValues(array, key) {
 							uniqueTitles.forEach(title => {
                             %>
 							<li>
-								<a href="#" title="<%=title%>"><%= title %></a>
+								<a href="https://www.google.com/search?q=<%= title %>" title="<%=title%>"
+								   target="_blank"><%= title
+									%></a>
 							</li>
                             <%});%>
 						</ul>
@@ -94,7 +96,10 @@ function getUniqueValues(array, key) {
                     %>
 					<li data-filter="<%= media.year%> <%= media.genre%> <%= media.type %>">
 						<div class="thumbnail-wrapper">
+							<a href="https://www.google.com/search?q=<%= media.title %>" title="<%= media.title %>"
+							   target="_blank">
 							<img src="<%= media.poster %>" alt="<%= media.title %>" />
+							</a>
 						</div>
 						<div class="info-wrapper">
 							<p class="info-year"><%= media.title %> (<%= media.year%>)</p>

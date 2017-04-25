@@ -38,8 +38,18 @@
             }
             &.dropdown {
               margin-right: 1.25em;
-
+              @include tabletportrait{
+                width: 47%;
+                float:left;
+              }
+              @include phoneportrait{
+                width:100%;
+                float:none;
+              }
               span {
+                @include tabletportrait{
+                  width:75%;
+                }
                 &.toggle {
                   display:inline-block;
                   color: $dark-gray;
@@ -50,6 +60,7 @@
                   padding: .5em 2.5em;
                   background: $light-gray-bg;
                   border-bottom: 4px solid $medium-gray;
+
                   @include phoneportrait{
                     width: 100%;
                     box-sizing: border-box;
@@ -57,6 +68,7 @@
                   @include tabletportrait{
                     text-align: center;
                   }
+
                   &:hover {
                     cursor: pointer;
                   }
@@ -66,12 +78,21 @@
                     font-size: 0.75em;
                     vertical-align: middle;
                   }
+                  &.expanded{
+                    &:after {
+                      content: '^';
+                      margin-left: 1em;
+                      font-size: 1.25em;
+                      vertical-align: middle;
+                      font-weight: 700;
+                    }
+                  }
                 }
               }
               .dropdown-content{
                 display:none;
-                @include tabletportrait{
-                  display: block;
+                &.show{
+                  display:block;
                 }
                 ul {
                   @include dropdowns($isdropdown);
@@ -81,10 +102,10 @@
                 }
               }
               &:hover{
-                .dropdown-content{
-                  display:block;
-
-                }
+                //.dropdown-content{
+                //  display:block;
+                //
+                //}
               }
             }
             &.search-input{
@@ -152,6 +173,10 @@
             > div {
               margin-right: 1em;
               font-size: 0.95em;
+              @include tabletportrait{
+                width: 45%;
+                float: left;
+              }
               label {
                 color: inherit;
               }
