@@ -202,6 +202,9 @@
         }
       }
       &.list-wrapper {
+        .results-message{
+          @include setfontstyle($isMontserrat,normal,1.1em);
+        }
         ul.contents-list {
           list-style-type: none;
           display: flex;

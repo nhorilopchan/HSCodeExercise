@@ -99,17 +99,11 @@ document.addEventListener('DOMContentLoaded', function() {
             });
         }
         function createResultsMessage(){
-            // var selectedItemsArr =[];
-            // console.log(selectedItemsArr);
-            // var resultsLabel = document.querySelector('.results-message');
-            // [].forEach.call(selectedItemsArr,item =>{
-            //     console.log(item);
-            //         resultsLabel.innerHTML = item;
-            // });
             var resultsLabel = document.querySelector('.results-message');
             var totalSearchItems = document.querySelectorAll('.contents-list li:not(.content-item-hidden)').length;
+            var totalItemsMessage = "Results";
             console.log(totalSearchItems);
-            resultsLabel.innerHTML = totalSearchItems;
+            resultsLabel.innerHTML = `Results 1-10 of ${totalSearchItems}`;
             console.log(resultsLabel);
         }
         //By Genre and Year - Dropdowns
