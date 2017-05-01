@@ -18,7 +18,6 @@ document.addEventListener('DOMContentLoaded', function() {
         var toggleControls = document.querySelectorAll('.toggle');
         [].forEach.call(toggleControls,toggleControl => {
             toggleControl.addEventListener('click',evt=>{
-
                 const el = evt.target;
                 //Toggle CssClass on controls
                 toggleClass(el,'expanded');
@@ -30,7 +29,6 @@ document.addEventListener('DOMContentLoaded', function() {
         //Search By Title - Autocomplete
         var searchinput = document.querySelector('#search-input');
         var items = document.querySelector('.search-list').getElementsByTagName('li');
-
         searchinput.addEventListener('keyup', function(evt) {
             const { value } = evt.target;
             var pat = new RegExp(value, 'i');
@@ -72,10 +70,11 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         //Dropdowns
         function showHideMedia(mediaItems,controlClass){
-
+            var selectedMedia = [];
             [].forEach.call(mediaItems, mediaItem => {
                 mediaItem.addEventListener('change', evt => {
                     const { value } = evt.target;
+                    // console.log(mediaItem.value);
                     const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
                     if (filtercontrols.length > 0) {
                         var mediaListItems = document.querySelectorAll('.contents-list li');
@@ -94,8 +93,24 @@ document.addEventListener('DOMContentLoaded', function() {
                             matchingItem.classList.remove('content-item-hidden');
                         });
                     }
+                    selectedMedia.push(mediaItem.value);
+                    createResultsMessage();
                 });
             });
+        }
+        function createResultsMessage(){
+            // var selectedItemsArr =[];
+            // console.log(selectedItemsArr);
+            // var resultsLabel = document.querySelector('.results-message');
+            // [].forEach.call(selectedItemsArr,item =>{
+            //     console.log(item);
+            //         resultsLabel.innerHTML = item;
+            // });
+            var resultsLabel = document.querySelector('.results-message');
+            var totalSearchItems = document.querySelectorAll('.contents-list li:not(.content-item-hidden)').length;
+            console.log(totalSearchItems);
+            resultsLabel.innerHTML = totalSearchItems;
+            console.log(resultsLabel);
         }
         //By Genre and Year - Dropdowns
         const checkboxClass = '.filter-list';
@@ -107,6 +122,8 @@ document.addEventListener('DOMContentLoaded', function() {
         const radiobtns = document.querySelectorAll(radiobtnClass);
         showHideMedia(radiobtns,radiobtnClass);
 
+        //Search Results Info
+        createResultsMessage();
         //Clear All Filters
         var clearFilterButton = document.getElementById('clearfilters');
         clearFilterButton.addEventListener('click', evt => {
@@ -130,6 +147,8 @@ document.addEventListener('DOMContentLoaded', function() {
             [].forEach.call(radioButtons,(radioButton)=>{
                 radioButton.checked = false;
             });
+            //Reset Total Items Message
+            createResultsMessage();
         });
     }
 })
