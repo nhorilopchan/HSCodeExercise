@@ -70,7 +70,6 @@ document.addEventListener('DOMContentLoaded', function() {
         }
         //Dropdowns
         function showHideMedia(mediaItems,controlClass){
-            var selectedMedia = [];
             [].forEach.call(mediaItems, mediaItem => {
                 mediaItem.addEventListener('change', evt => {
                     const { value } = evt.target;
@@ -93,19 +92,39 @@ document.addEventListener('DOMContentLoaded', function() {
                             matchingItem.classList.remove('content-item-hidden');
                         });
                     }
-                    selectedMedia.push(mediaItem.value);
-                    createResultsMessage();
+                    createResultsMessage(mediaItem.value);
                 });
             });
         }
-        function createResultsMessage(){
+        function createResultsMessage(selectedFilter){
             var resultsLabel = document.querySelector('.results-message');
             var totalSearchItems = document.querySelectorAll('.contents-list li:not(.content-item-hidden)').length;
-            var totalItemsMessage = "Results";
-            console.log(totalSearchItems);
-            resultsLabel.innerHTML = `Results 1-10 of ${totalSearchItems}`;
-            console.log(resultsLabel);
+            resultsLabel.innerHTML = `Displaying ${totalSearchItems} of ${totalSearchItems}`;
+
+            //Badges
+            if(selectedFilter != undefined) {
+                var filterBadge = document.createElement('span');
+                filterBadge.classList.add('badge');
+                filterBadge.innerHTML = selectedFilter;
+                var selectedFiltersBadges = document.querySelector('.selected-filters');
+                selectedFiltersBadges.insertBefore(filterBadge, selectedFiltersBadges.firstChild);
+            }
         }
+        //Remove selected Filter
+        var selectedFiltersBadges = document.querySelectorAll('.selected-filters span');
+        [].forEach.call(selectedFiltersBadges,selectedBadge => {
+            selectedBadge.addEventListener('click',event => {
+                const { value }= event.target;
+                alert('hi');
+                console.log(selectedBadge.innerHTML);
+                var mediaListItems = document.querySelectorAll(`.contents-list li[data-filter*="${selectedBadge.innerHTML}"]`);
+                [].forEach.call(mediaListItems, mediaListItem => {
+                    if(!mediaListItem.classList.contains('content-item-hidden')){
+                        mediaListItem.classList.remove('content-item-hidden');
+                    }
+                });
+            });
+        });
         //By Genre and Year - Dropdowns
         const checkboxClass = '.filter-list';
         const checkboxes = document.querySelectorAll(checkboxClass);
@@ -122,6 +141,10 @@ document.addEventListener('DOMContentLoaded', function() {
         var clearFilterButton = document.getElementById('clearfilters');
         clearFilterButton.addEventListener('click', evt => {
             evt.preventDefault();
+            //Clear selected Filters Badges
+            var selectedFilterBadges = document.querySelector('.selected-filters');
+            selectedFilterBadges.innerHTML = " ";
+
             //Show all media items
             var mediaListItems = document.querySelectorAll('.contents-list li');
             [].forEach.call(mediaListItems, mediaListItem => {
