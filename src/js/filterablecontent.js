@@ -114,6 +114,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 var filterBadge = document.createElement('span');
                 filterBadge.classList.add('badge');
                 filterBadge.setAttribute('data-filter', selectedFilterAtt);
+                filterBadge.setAttribute('data-control', selectedFilterType);
                 filterBadge.setAttribute('value', selectedFilter);
                 filterBadge.innerHTML = selectedFilter;
                 var selectedFiltersBadges = document.querySelector('.selected-filters');
@@ -121,13 +122,28 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 //Click event to each selected Filter Badge\
                 filterBadge.addEventListener('click', event => {
-                    const {value} = event.target;
-                    console.log({value});
+                    const badge = event.target;
+                    console.log('this');
+                    console.log(event.target);
+
                     removeFilterContent(selectedFiltersBadges, event.target);
-                    //clearSelectedFilters(selectedFilterAtt,event.target,selectedFilterType);
+                    var dataFilterAttribute = badge.getAttribute('data-filter');
+                    var filterControlType = badge.getAttribute('data-control');
+                    clearSelectedFilters(dataFilterAttribute,event.target,filterControlType);
                 });
             }
         }
+
+        //By Genre and Year - Dropdowns
+        const checkboxClass = '.filter-list';
+        const checkboxes = document.querySelectorAll(checkboxClass);
+        showHideMedia(checkboxes,checkboxClass);
+
+        //By Type - Radiobuttons
+        const radiobtnClass = '.filter-radio';
+        const radiobtns = document.querySelectorAll(radiobtnClass);
+        showHideMedia(radiobtns,radiobtnClass);
+
         //Remove Filters from Content
         function removeFilterContent(filtersBadges,selectedFilter){
             //Remove selected Filter from Content Lists
@@ -141,20 +157,11 @@ document.addEventListener('DOMContentLoaded', function() {
             createResultsMessage(selectedFilter.innerHTML);
         }
 
-        //By Genre and Year - Dropdowns
-        const checkboxClass = '.filter-list';
-        const checkboxes = document.querySelectorAll(checkboxClass);
-        showHideMedia(checkboxes,checkboxClass);
-
-        //By Type - Radiobuttons
-        const radiobtnClass = '.filter-radio';
-        const radiobtns = document.querySelectorAll(radiobtnClass);
-        showHideMedia(radiobtns,radiobtnClass);
-
         //Clear all Filter Controls
         //Checkboxes
         function clearSelectedFilters(dataFilterAtt,currControl,filterType) {
-            var controls =  document.querySelectorAll(`.${filterType} [data-filter*="${dataFilterAtt}"][value="${currControl.innerHTML}"]`);
+            var controls =  document.querySelectorAll(`.${filterType}[data-filter*="${dataFilterAtt}"][value="${currControl.innerHTML}"]`);
+            console.log(controls);
                 [].forEach.call(controls, (control) => {
                     control.checked = false;
                 });
