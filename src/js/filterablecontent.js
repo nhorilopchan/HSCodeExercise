@@ -73,7 +73,10 @@ document.addEventListener('DOMContentLoaded', function() {
             [].forEach.call(mediaItems, mediaItem => {
                 mediaItem.addEventListener('change', evt => {
                     const { value } = evt.target;
-                    console.log(mediaItem);
+                    const dataFilter = mediaItem.getAttribute('data-filter');
+                    const filterType = mediaItem.getAttribute('class');
+                    console.log(filterType);
+                    console.log({ value });
                     const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
                     if (filtercontrols.length > 0) {
                         var mediaListItems = document.querySelectorAll('.contents-list li');
@@ -93,24 +96,25 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     }
                     createResultsMessage(mediaItem.value);
-                    createFilterBadges(mediaItem.value);
+                    createFilterBadges(mediaItem.value, dataFilter, filterType);
                 });
             });
         }
+
+        //Create Result Message
         function createResultsMessage(selectedFilter){
             var resultsLabel = document.querySelector('.results-message');
             var totalSearchItems = document.querySelectorAll('.contents-list li:not(.content-item-hidden)').length;
             resultsLabel.innerHTML = `Displaying ${totalSearchItems} of ${totalSearchItems}`;
-
         }
 
         //Filter Badges
-        function createFilterBadges(selectedFilter) {
+        function createFilterBadges(selectedFilter, selectedFilterAtt,selectedFilterType) {
             if (selectedFilter != undefined) {
                 var filterBadge = document.createElement('span');
                 filterBadge.classList.add('badge');
-                filterBadge.setAttribute('data-filter', selectedFilter);
-                filterBadge.setAttribute('vaue', selectedFilter);
+                filterBadge.setAttribute('data-filter', selectedFilterAtt);
+                filterBadge.setAttribute('value', selectedFilter);
                 filterBadge.innerHTML = selectedFilter;
                 var selectedFiltersBadges = document.querySelector('.selected-filters');
                 selectedFiltersBadges.insertBefore(filterBadge, selectedFiltersBadges.firstChild);
@@ -118,17 +122,15 @@ document.addEventListener('DOMContentLoaded', function() {
                 //Click event to each selected Filter Badge\
                 filterBadge.addEventListener('click', event => {
                     const {value} = event.target;
-                    removeFilter(selectedFiltersBadges, event.target);
+                    console.log({value});
+                    removeFilterContent(selectedFiltersBadges, event.target);
+                    //clearSelectedFilters(selectedFilterAtt,event.target,selectedFilterType);
                 });
             }
         }
-        //Remove Filters
-        function removeFilter(filtersBadges,selectedFilter){
-            // console.log("REMOVING");
-            // console.log(selectedFilter);
-            // console.log(filtersBadges);
-
-            //Remove selected Filter
+        //Remove Filters from Content
+        function removeFilterContent(filtersBadges,selectedFilter){
+            //Remove selected Filter from Content Lists
             var mediaListItems = document.querySelectorAll(`.contents-list li:not([data-filter*="${selectedFilter.innerHTML}"])`);
             [].forEach.call(mediaListItems, mediaListItem => {
                 if(mediaListItem.classList.contains('content-item-hidden')){
@@ -138,6 +140,7 @@ document.addEventListener('DOMContentLoaded', function() {
             filtersBadges.removeChild(selectedFilter);
             createResultsMessage(selectedFilter.innerHTML);
         }
+
         //By Genre and Year - Dropdowns
         const checkboxClass = '.filter-list';
         const checkboxes = document.querySelectorAll(checkboxClass);
@@ -148,9 +151,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const radiobtns = document.querySelectorAll(radiobtnClass);
         showHideMedia(radiobtns,radiobtnClass);
 
+        //Clear all Filter Controls
+        //Checkboxes
+        function clearSelectedFilters(dataFilterAtt,currControl,filterType) {
+            var controls =  document.querySelectorAll(`.${filterType} [data-filter*="${dataFilterAtt}"][value="${currControl.innerHTML}"]`);
+                [].forEach.call(controls, (control) => {
+                    control.checked = false;
+                });
+
+        }
+        //Clear ALL Filters
+        function clearAllFilters(controls){
+            console.log(controls);
+            [].forEach.call(controls, currcontrol=>{
+                console.log(controls);
+                [].forEach.call(currcontrol,control=>{
+                    control.checked = false;
+                });
+            });
+        }
         //Search Results Info
         createResultsMessage();
-        //Clear All Filters
+        //Clear All Filters Button Click
         var clearFilterButton = document.getElementById('clearfilters');
         clearFilterButton.addEventListener('click', evt => {
             evt.preventDefault();
@@ -165,18 +187,13 @@ document.addEventListener('DOMContentLoaded', function() {
                     mediaListItem.classList.remove('content-item-hidden');
                 }
             });
-
-            //Clear all Filter Controls
-            //Checkboxes
+            //Clear All Filters
+            //CheckBoxes
             var checkBoxes = document.querySelectorAll('.filter-list:checked');
-            [].forEach.call(checkBoxes,(checkBox)=>{
-                checkBox.checked = false;
-            });
             //Radiobuttons
             var radioButtons = document.querySelectorAll('.filter-radio:checked');
-            [].forEach.call(radioButtons,(radioButton)=>{
-                radioButton.checked = false;
-            });
+            clearAllFilters([checkBoxes,radioButtons]);
+
             //Reset Total Items Message
             createResultsMessage();
         });
