@@ -73,7 +73,7 @@ document.addEventListener('DOMContentLoaded', function() {
             [].forEach.call(mediaItems, mediaItem => {
                 mediaItem.addEventListener('change', evt => {
                     const { value } = evt.target;
-                    // console.log(mediaItem.value);
+                    console.log(mediaItem);
                     const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
                     if (filtercontrols.length > 0) {
                         var mediaListItems = document.querySelectorAll('.contents-list li');
@@ -93,6 +93,7 @@ document.addEventListener('DOMContentLoaded', function() {
                         });
                     }
                     createResultsMessage(mediaItem.value);
+                    createFilterBadges(mediaItem.value);
                 });
             });
         }
@@ -101,30 +102,42 @@ document.addEventListener('DOMContentLoaded', function() {
             var totalSearchItems = document.querySelectorAll('.contents-list li:not(.content-item-hidden)').length;
             resultsLabel.innerHTML = `Displaying ${totalSearchItems} of ${totalSearchItems}`;
 
-            //Badges
-            if(selectedFilter != undefined) {
+        }
+
+        //Filter Badges
+        function createFilterBadges(selectedFilter) {
+            if (selectedFilter != undefined) {
                 var filterBadge = document.createElement('span');
                 filterBadge.classList.add('badge');
+                filterBadge.setAttribute('data-filter', selectedFilter);
+                filterBadge.setAttribute('vaue', selectedFilter);
                 filterBadge.innerHTML = selectedFilter;
                 var selectedFiltersBadges = document.querySelector('.selected-filters');
                 selectedFiltersBadges.insertBefore(filterBadge, selectedFiltersBadges.firstChild);
+
+                //Click event to each selected Filter Badge\
+                filterBadge.addEventListener('click', event => {
+                    const {value} = event.target;
+                    removeFilter(selectedFiltersBadges, event.target);
+                });
             }
         }
-        //Remove selected Filter
-        var selectedFiltersBadges = document.querySelectorAll('.selected-filters span');
-        [].forEach.call(selectedFiltersBadges,selectedBadge => {
-            selectedBadge.addEventListener('click',event => {
-                const { value }= event.target;
-                alert('hi');
-                console.log(selectedBadge.innerHTML);
-                var mediaListItems = document.querySelectorAll(`.contents-list li[data-filter*="${selectedBadge.innerHTML}"]`);
-                [].forEach.call(mediaListItems, mediaListItem => {
-                    if(!mediaListItem.classList.contains('content-item-hidden')){
-                        mediaListItem.classList.remove('content-item-hidden');
-                    }
-                });
+        //Remove Filters
+        function removeFilter(filtersBadges,selectedFilter){
+            // console.log("REMOVING");
+            // console.log(selectedFilter);
+            // console.log(filtersBadges);
+
+            //Remove selected Filter
+            var mediaListItems = document.querySelectorAll(`.contents-list li:not([data-filter*="${selectedFilter.innerHTML}"])`);
+            [].forEach.call(mediaListItems, mediaListItem => {
+                if(mediaListItem.classList.contains('content-item-hidden')){
+                    mediaListItem.classList.remove('content-item-hidden');
+                }
             });
-        });
+            filtersBadges.removeChild(selectedFilter);
+            createResultsMessage(selectedFilter.innerHTML);
+        }
         //By Genre and Year - Dropdowns
         const checkboxClass = '.filter-list';
         const checkboxes = document.querySelectorAll(checkboxClass);
