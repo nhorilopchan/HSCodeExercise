@@ -85,6 +85,8 @@ $isRoboto:'Roboto Slab';
     border:1px solid $medium-gray;
     position: absolute;
     background: $white;
+    width:100%;
+
     @include tabletportrait{
       position:static;
     }

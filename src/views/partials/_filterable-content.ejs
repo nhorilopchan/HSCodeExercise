@@ -93,7 +93,7 @@ function getUniqueValues(array, key) {
 			<div class="selected-filters"></div>
 			<label class="results-message"></label>
 			<div>
-				<ul class="contents-list">
+				<ul class="contents-list" id="contentsParent">
                     <% data.media.forEach(media => {
                     %>
 					<li data-filter="<%= media.year%> <%= media.genre%> <%= media.type %>">

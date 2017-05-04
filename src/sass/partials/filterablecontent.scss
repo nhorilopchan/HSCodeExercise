@@ -20,11 +20,13 @@
           padding-bottom: 1em;
 
           > div {
+            position:relative;
             width: auto;
             float: left;
             font-family: $isMontserrat;
             font-style: normal;
             font-weight: 700;
+
             @include tabletportrait{
               width: 100%;
               margin-bottom: 1em;
@@ -218,6 +220,7 @@
             width:33.33%;
             padding: 1em 1.25em;
             box-sizing: border-box;
+            display:block;
 
             @include tabletportrait{
               width:100%;
@@ -243,24 +246,17 @@
                 }
               }
             }
-            .info-wrapper {
-              padding-top: 0.75em;
-              p[class^='info'] {
-                font-family: $isMontserrat;
-                font-size: 0.85em;
-                padding-bottom: 0.5em;
-                text-transform: capitalize;
-                &.info-genre {
-                  &:before {
-                    content: 'Genres:';
-                    margin-right: 0.25em;
-                  }
-                }
-              }
-            }
 
-            &.content-item-hidden{
+            &.content-item-visible{
+              display:block;
+            }
+          }
+          &.filteringOn{
+            li{
               display:none;
+              &.content-item-visible{
+                display:block;
+              }
             }
           }
         }

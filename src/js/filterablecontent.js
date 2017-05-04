@@ -73,28 +73,24 @@ document.addEventListener('DOMContentLoaded', function() {
             [].forEach.call(mediaItems, mediaItem => {
                 mediaItem.addEventListener('change', evt => {
                     const { value } = evt.target;
-                    const dataFilter = mediaItem.getAttribute('data-filter');
+                    const dataFilter = mediaItem.dataset.filter;
                     const filterType = mediaItem.getAttribute('class');
-                    console.log(filterType);
-                    console.log({ value });
                     const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
+                    const filterParentControl = document.getElementById('contentsParent');
+                    if(!filterParentControl.classList.contains('filteringOn')){
+                        filterParentControl.classList.add('filteringOn');
+                    }
                     if (filtercontrols.length > 0) {
-                        var mediaListItems = document.querySelectorAll('.contents-list li');
-                        [].forEach.call(mediaListItems, mediaListItem => {
-                            mediaListItem.classList.add('content-item-hidden');
-                        });
                         [].forEach.call(filtercontrols, filtercontrol => {
-                            const matchingItems = document.querySelectorAll(`.contents-list li[data-filter*="${value}"]`);
-                            [].forEach.call(matchingItems, matchingItem => {
-                                matchingItem.classList.remove('content-item-hidden');
+                            var contents = document.querySelectorAll(`.contents-list li[data-filter*="${filtercontrol.value}"]`);
+                            [].forEach.call(contents, content => {
+                                content.classList.add("content-item-visible");
+                                //content.classList.add("content-item-hidden");
+
                             });
                         });
-                    } else {
-                        const matchingItems = document.querySelectorAll(`.contents-list li`);
-                        [].forEach.call(matchingItems, matchingItem => {
-                            matchingItem.classList.remove('content-item-hidden');
-                        });
                     }
+
                     createResultsMessage(mediaItem.value);
                     createFilterBadges(mediaItem.value, dataFilter, filterType);
                 });
@@ -112,11 +108,13 @@ document.addEventListener('DOMContentLoaded', function() {
         function createFilterBadges(selectedFilter, selectedFilterAtt,selectedFilterType) {
             if (selectedFilter != undefined) {
                 var filterBadge = document.createElement('span');
+                //Add attributes
                 filterBadge.classList.add('badge');
                 filterBadge.setAttribute('data-filter', selectedFilterAtt);
                 filterBadge.setAttribute('data-control', selectedFilterType);
                 filterBadge.setAttribute('value', selectedFilter);
                 filterBadge.innerHTML = selectedFilter;
+
                 var selectedFiltersBadges = document.querySelector('.selected-filters');
                 selectedFiltersBadges.insertBefore(filterBadge, selectedFiltersBadges.firstChild);
 
@@ -127,8 +125,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log(event.target);
 
                     removeFilterContent(selectedFiltersBadges, event.target);
-                    var dataFilterAttribute = badge.getAttribute('data-filter');
-                    var filterControlType = badge.getAttribute('data-control');
+                    var dataFilterAttribute = badge.dataset.filter;
+                    var filterControlType = badge.dataset.control;
                     clearSelectedFilters(dataFilterAttribute,event.target,filterControlType);
                 });
             }
@@ -162,9 +160,9 @@ document.addEventListener('DOMContentLoaded', function() {
         function clearSelectedFilters(dataFilterAtt,currControl,filterType) {
             var controls =  document.querySelectorAll(`.${filterType}[data-filter*="${dataFilterAtt}"][value="${currControl.innerHTML}"]`);
             console.log(controls);
-                [].forEach.call(controls, (control) => {
-                    control.checked = false;
-                });
+            [].forEach.call(controls, (control) => {
+                control.checked = false;
+            });
 
         }
         //Clear ALL Filters

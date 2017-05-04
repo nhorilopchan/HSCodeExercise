@@ -49,8 +49,7 @@ gulp.task('js', function() {
             exclude: ['tasks'],
             ignoreFiles: ['-min.js']
         }))
-        .pipe(gulp.dest(jsDest))
-        .pipe(browserSync.stream());
+        .pipe(gulp.dest(jsDest));
 });
 
 //CSS Files
@@ -71,7 +70,7 @@ gulp.task('sass', function() {
 });
 gulp.task('watch', function() {
     gulp.watch('src/views/**/*.ejs',['ejs']).on('change',reload);
-    gulp.watch('build/scripts/*.js',['js']).on('change',reload);
+    gulp.watch('build/scripts/*.js',['js']);
     gulp.watch('src/sass/**/*.scss',['sass']).on('change',reload);
 });
 gulp.task('serve',['watch'], function() {
