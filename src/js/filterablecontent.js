@@ -277,9 +277,11 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedFilterBadges.innerHTML = " ";
 
             //Show all media items
-            //const filterParentControl = document.getElementById('contentsParent');
             if(filterParentControl.classList.contains('filteringOn')){
                 filterParentControl.classList.remove('filteringOn');
+            }
+            if(filterParentControl.classList.contains('filteringByTextOn')){
+                filterParentControl.classList.remove('filteringByTextOn');
             }
             var mediaListItems = document.querySelectorAll('.contents-list li');
             [].forEach.call(mediaListItems, mediaListItem => {
@@ -288,6 +290,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             });
             //Clear All Filters
+            //TextBox
+            document.getElementById('search-text-input').value='';
             //CheckBoxes
             var checkBoxes = document.querySelectorAll('.filter-list:checked');
             //Radiobuttons
