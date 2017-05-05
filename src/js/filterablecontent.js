@@ -99,10 +99,10 @@ document.addEventListener('DOMContentLoaded', function() {
                     else{
                         var badgesParent = document.querySelector('.selected-filters');
                         var selectedBadgeToRemove = document.querySelector(`.selected-filters span[value="${mediaItem.value}"]`);
-                        console.log("YOOOO");
-                        console.log("UNCHECKING");
-                        console.log(mediaItem.value);
-                        console.log(selectedBadgeToRemove);
+                        // console.log("YOOOO");
+                        // console.log("UNCHECKING");
+                        // console.log(mediaItem.value);
+                        // console.log(selectedBadgeToRemove);
                         //console.log(selectedBadgeToRemove.innerHTML);
                         if(selectedBadgeToRemove != null) {
                             removeFilterContent(badgesParent, selectedBadgeToRemove);
@@ -217,10 +217,14 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedFilterBadges.innerHTML = " ";
 
             //Show all media items
+            const filterParentControl = document.getElementById('contentsParent');
+            if(filterParentControl.classList.contains('filteringOn')){
+                filterParentControl.classList.remove('filteringOn');
+            }
             var mediaListItems = document.querySelectorAll('.contents-list li');
             [].forEach.call(mediaListItems, mediaListItem => {
-                if(mediaListItem.classList.contains('content-item-hidden')){
-                    mediaListItem.classList.remove('content-item-hidden');
+                if(mediaListItem.classList.contains('checked')){
+                    mediaListItem.classList.remove('checked');
                 }
             });
             //Clear All Filters
