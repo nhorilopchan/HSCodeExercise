@@ -14,6 +14,7 @@ document.addEventListener('DOMContentLoaded', function() {
         searchinputel.insertBefore(eldiv,searchinputel.firstChild);
         eldiv.className += " search icon";
 
+
         //Search By Genre/Year Toggle on click
         var toggleControls = document.querySelectorAll('.toggle');
         [].forEach.call(toggleControls,toggleControl => {
@@ -77,22 +78,37 @@ document.addEventListener('DOMContentLoaded', function() {
                     const filterType = mediaItem.getAttribute('class');
                     const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
                     const filterParentControl = document.getElementById('contentsParent');
+
                     if(!filterParentControl.classList.contains('filteringOn')){
                         filterParentControl.classList.add('filteringOn');
                     }
-                    if (filtercontrols.length > 0) {
-                        [].forEach.call(filtercontrols, filtercontrol => {
-                            var contents = document.querySelectorAll(`.contents-list li[data-filter*="${filtercontrol.value}"]`);
-                            [].forEach.call(contents, content => {
-                                content.classList.add("content-item-visible");
-                                //content.classList.add("content-item-hidden");
 
-                            });
-                        });
+                    var contents1 = document.querySelectorAll(`.contents-list li[data-filter*="${mediaItem.value}"]`);
+                    [].forEach.call(contents1,content1=>{
+                        console.log("CONTENT1");
+                        console.log(content1);
+
+                        toggleClass(content1,'checked');
+                        createResultsMessage({ value });
+                    });
+                    if(mediaItem.checked) {
+                        // console.log("CHECKING");
+                        // console.log(mediaItem);
+                        createFilterBadges(mediaItem.value, mediaItem.dataset.filter, mediaItem.getAttribute('class'));
+                    }
+                    else{
+                        var badgesParent = document.querySelector('.selected-filters');
+                        var selectedBadgeToRemove = document.querySelector(`.selected-filters span[value="${mediaItem.value}"]`);
+                        console.log("YOOOO");
+                        console.log("UNCHECKING");
+                        console.log(mediaItem.value);
+                        console.log(selectedBadgeToRemove);
+                        //console.log(selectedBadgeToRemove.innerHTML);
+                        if(selectedBadgeToRemove != null) {
+                            removeFilterContent(badgesParent, selectedBadgeToRemove);
+                        }
                     }
 
-                    createResultsMessage(mediaItem.value);
-                    createFilterBadges(mediaItem.value, dataFilter, filterType);
                 });
             });
         }
@@ -107,16 +123,27 @@ document.addEventListener('DOMContentLoaded', function() {
         //Filter Badges
         function createFilterBadges(selectedFilter, selectedFilterAtt,selectedFilterType) {
             if (selectedFilter != undefined) {
+                var selectedBadgesParent = document.querySelector('.selected-filters');
+
+                //Create new Badge
                 var filterBadge = document.createElement('span');
                 //Add attributes
-                filterBadge.classList.add('badge');
+                filterBadge.classList.add('badge','checked');
                 filterBadge.setAttribute('data-filter', selectedFilterAtt);
                 filterBadge.setAttribute('data-control', selectedFilterType);
                 filterBadge.setAttribute('value', selectedFilter);
                 filterBadge.innerHTML = selectedFilter;
 
-                var selectedFiltersBadges = document.querySelector('.selected-filters');
-                selectedFiltersBadges.insertBefore(filterBadge, selectedFiltersBadges.firstChild);
+                if(selectedBadgesParent.children.length){
+                    var childBadges = document.querySelector(`.selected-filters span[value="${selectedFilter}"]`);
+
+                    if(childBadges != null) {
+                        //console.log('BADGE EXISTS');
+                        return false;
+                    }
+                }
+                //Insert new Badge
+                selectedBadgesParent.insertBefore(filterBadge, selectedBadgesParent.firstChild);
 
                 //Click event to each selected Filter Badge\
                 filterBadge.addEventListener('click', event => {
@@ -124,7 +151,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     console.log('this');
                     console.log(event.target);
 
-                    removeFilterContent(selectedFiltersBadges, event.target);
+                    removeFilterContent(selectedBadgesParent, event.target);
                     var dataFilterAttribute = badge.dataset.filter;
                     var filterControlType = badge.dataset.control;
                     clearSelectedFilters(dataFilterAttribute,event.target,filterControlType);
@@ -145,12 +172,16 @@ document.addEventListener('DOMContentLoaded', function() {
         //Remove Filters from Content
         function removeFilterContent(filtersBadges,selectedFilter){
             //Remove selected Filter from Content Lists
-            var mediaListItems = document.querySelectorAll(`.contents-list li:not([data-filter*="${selectedFilter.innerHTML}"])`);
+            console.log("REMOVING");
+            console.log(selectedFilter);
+            var mediaListItems = document.querySelectorAll(`.contents-list li[data-filter*="${selectedFilter.innerHTML}"]`);
             [].forEach.call(mediaListItems, mediaListItem => {
-                if(mediaListItem.classList.contains('content-item-hidden')){
-                    mediaListItem.classList.remove('content-item-hidden');
+                //console.log(mediaListItem);
+                if(mediaListItem.classList.contains('checked')){
+                    mediaListItem.classList.remove('checked');
                 }
             });
+
             filtersBadges.removeChild(selectedFilter);
             createResultsMessage(selectedFilter.innerHTML);
         }

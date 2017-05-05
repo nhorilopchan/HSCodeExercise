@@ -96,7 +96,7 @@ function getUniqueValues(array, key) {
 				<ul class="contents-list" id="contentsParent">
                     <% data.media.forEach(media => {
                     %>
-					<li data-filter="<%= media.year%> <%= media.genre%> <%= media.type %>">
+					<li data-filter="<%= media.year%> <%= media.genre%> <%= media.type %>" class="content-item-visible">
 						<div class="thumbnail-wrapper">
 							<a href="https://www.google.com/search?q=<%= media.title %>" title="<%= media.title %>"
 							   target="_blank">

@@ -206,6 +206,7 @@
         }
       }
       &.list-wrapper {
+        padding:1.5em 1em;
         .results-message{
           @include setfontstyle($isMontserrat,normal,0.95em);
           float:right;
@@ -220,7 +221,6 @@
             width:33.33%;
             padding: 1em 1.25em;
             box-sizing: border-box;
-            display:block;
 
             @include tabletportrait{
               width:100%;
@@ -253,9 +253,11 @@
           }
           &.filteringOn{
             li{
-              display:none;
               &.content-item-visible{
-                display:block;
+                display:none;
+                &.checked{
+                  display:block;
+                }
               }
             }
           }
@@ -263,10 +265,11 @@
         .selected-filters{
           display:inline-block;
           z-index:-1;
+          padding-bottom:1em;
 
           >span{
             background: $light-gray-bg;
-            padding:0.5em;
+            padding:0.5em 1em;
             position:relative;
             color:$dark-gray;
             text-transform: capitalize;
