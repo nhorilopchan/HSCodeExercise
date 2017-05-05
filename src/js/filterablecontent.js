@@ -1,13 +1,28 @@
 /* Filterable Content */
 
 document.addEventListener('DOMContentLoaded', function() {
+    /* Global Variables */
+    const filterParentControl = document.getElementById('contentsParent');
+
     if(document.querySelectorAll('.filterable-content-block').length){
         //Adds search icon to the search input field
         document.addEventListener('click', function() {
-            //Hide the dropdownlist on click outside the input box
+            //Hide the autocomplete dropdownlist on click outside the input box
             if(document.querySelector('.search-list').classList.contains('active')){
                 document.querySelector('.search-list').classList.remove("active");
             }
+            //Hide checkboxes dropdowns
+            // var filters = document.querySelectorAll('.toggle');
+            // [].forEach.call(filters,filter =>{
+            //     console.log(filter);
+            //     if(filter.classList.contains('expanded')){
+            //         filter.classList.remove("expanded");
+            //     }
+            //     var filterDropdown = filter.nextElementSibling;
+            //     if(filterDropdown.classList.contains('show')){
+            //         filterDropdown.classList.remove("show");
+            //     }
+            // });
         });
         var searchinputel = document.getElementById('search-input');
         var eldiv = document.createElement('div');
@@ -39,8 +54,11 @@ document.addEventListener('DOMContentLoaded', function() {
             }
             //If input field is empty, hide the list
             if(value.length < 1){
-                if(document.querySelector('.search-list').className.contains('active')){
-                    document.querySelector('.search-list').className.replace(/\s+?active/, '');
+                if(document.querySelector('.search-list').classList.contains('active')){
+                    document.querySelector('.search-list').classList.remove('active');
+                }
+                if(filterParentControl.classList.contains('filteringByTextOn')){
+                    filterParentControl.classList.add('filteringByTextOn');
                 }
             }
             for (var i = 0; i < items.length; i++) {
@@ -52,6 +70,35 @@ document.addEventListener('DOMContentLoaded', function() {
                     item.className = item.className + ' hidden';
                 }
             }
+        });
+        if(document.querySelector('#search-text-input').value.length){
+            if(filterParentControl.classList.contains('filteringByTextOn')){
+                filterParentControl.classList.add('filteringByTextOn');
+            }
+        }
+        [].forEach.call(items,item=>{
+            item.addEventListener('click',evt=>{
+                const { value } = evt.target;
+                item.dataset.selected = true;
+                var textBox = document.getElementById('search-text-input');
+                console.log(textBox.value);
+                console.log(item.innerHTML);
+                textBox.value = item.innerHTML;
+
+                if(!filterParentControl.classList.contains('filteringByTextOn')){
+                    filterParentControl.classList.add('filteringByTextOn');
+                }
+                var contentsList = document.querySelectorAll(`.contents-list .info-name-year[data-name="${item.innerHTML}"]`);
+                contentsList.forEach(contentItem=>{
+                    if(contentItem.parentNode.parentNode.classList.contains('checked')){
+                        contentItem.parentNode.parentNode.classList.remove('checked');
+                    }
+                    else {
+                        contentItem.parentNode.parentNode.classList.add('checked');
+                        createResultsMessage();
+                    }
+                });
+            });
         });
         //Toggle CssClasses
         function toggleClass(control,className){
@@ -77,7 +124,7 @@ document.addEventListener('DOMContentLoaded', function() {
                     const dataFilter = mediaItem.dataset.filter;
                     const filterType = mediaItem.getAttribute('class');
                     const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
-                    const filterParentControl = document.getElementById('contentsParent');
+                    //const filterParentControl = document.getElementById('contentsParent');
 
                     if(!filterParentControl.classList.contains('filteringOn')){
                         filterParentControl.classList.add('filteringOn');
@@ -99,11 +146,8 @@ document.addEventListener('DOMContentLoaded', function() {
                     else{
                         var badgesParent = document.querySelector('.selected-filters');
                         var selectedBadgeToRemove = document.querySelector(`.selected-filters span[value="${mediaItem.value}"]`);
-                        // console.log("YOOOO");
-                        // console.log("UNCHECKING");
-                        // console.log(mediaItem.value);
-                        // console.log(selectedBadgeToRemove);
-                        //console.log(selectedBadgeToRemove.innerHTML);
+
+                        //When no checkboxes are checked, display all results
                         if(!document.querySelectorAll(`.filter-list:checked`).length){
                             filterParentControl.classList.remove('filteringOn');
                         }
@@ -117,7 +161,7 @@ document.addEventListener('DOMContentLoaded', function() {
         }
 
         //Create Result Message
-        function createResultsMessage(selectedFilter){
+        function createResultsMessage(){
             var resultsLabel = document.querySelector('.results-message');
             var filteredItems = document.querySelectorAll('.contents-list li.checked');
             if(filteredItems.length){
@@ -194,7 +238,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             filtersBadges.removeChild(selectedFilter);
-            createResultsMessage(selectedFilter.innerHTML);
+            createResultsMessage();
         }
 
         //Clear all Filter Controls
@@ -228,7 +272,7 @@ document.addEventListener('DOMContentLoaded', function() {
             selectedFilterBadges.innerHTML = " ";
 
             //Show all media items
-            const filterParentControl = document.getElementById('contentsParent');
+            //const filterParentControl = document.getElementById('contentsParent');
             if(filterParentControl.classList.contains('filteringOn')){
                 filterParentControl.classList.remove('filteringOn');
             }

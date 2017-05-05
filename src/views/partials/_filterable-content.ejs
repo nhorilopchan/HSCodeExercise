@@ -57,16 +57,12 @@ function getUniqueValues(array, key) {
 						</div>
 					</div>
 					<div id="search-input" class="search-input">
-						<input type="text" placeholder="Search By Name">
+						<input type="text" id="search-text-input" placeholder="Search By Name">
 						<ul class="search-list">
                             <% const uniqueTitles= getUniqueValues(data.media, "title");
 							uniqueTitles.forEach(title => {
                             %>
-							<li>
-								<a href="https://www.google.com/search?q=<%= title %>" title="<%=title%>"
-								   target="_blank"><%= title
-									%></a>
-							</li>
+							<li data-selected="false"><%=title%></li>
                             <%});%>
 						</ul>
 					</div>
@@ -100,11 +96,12 @@ function getUniqueValues(array, key) {
 						<div class="thumbnail-wrapper">
 							<a href="https://www.google.com/search?q=<%= media.title %>" title="<%= media.title %>"
 							   target="_blank">
-							<img src="<%= media.poster %>" alt="<%= media.title %>" />
+								<img src="<%= media.poster %>" alt="<%= media.title %>" />
 							</a>
 						</div>
 						<div class="info-wrapper">
-							<p class="info-year"><%= media.title %> (<%= media.year%>)</p>
+							<p class="info-name-year" data-name="<%= media.title %>"><%= media.title %> (<%= media
+										.year%>)</p>
 							<p class="info-genre"><%= media.genre.join(', ')%></p>
 						</div>
 					</li>

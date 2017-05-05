@@ -251,7 +251,7 @@
               display:block;
             }
           }
-          &.filteringOn{
+          &.filteringOn,&.filteringByTextOn{
             li{
               &.content-item-visible{
                 display:none;
