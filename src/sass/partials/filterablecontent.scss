@@ -169,6 +169,25 @@
               }
               ul.search-list{
                 @include dropdowns($isautocomplete);
+                li{
+                  cursor:pointer;
+                  transition:all 0.3s ease;
+                  position:relative;
+                  padding:0.5em 1em;
+
+                  &:hover{
+                    background:$light-gray-bg;
+                    font-size:1.1em;
+                    color:$orange;
+                    padding: 1em;
+                    &:before{
+                      content:'>';
+                      position:relative;
+                      padding-right:0.5em;
+                      font-weight:bold;
+                    }
+                  }
+                }
               }
             }
           }
