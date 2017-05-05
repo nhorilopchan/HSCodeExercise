@@ -104,6 +104,9 @@ document.addEventListener('DOMContentLoaded', function() {
                         // console.log(mediaItem.value);
                         // console.log(selectedBadgeToRemove);
                         //console.log(selectedBadgeToRemove.innerHTML);
+                        if(!document.querySelectorAll(`.filter-list:checked`).length){
+                            filterParentControl.classList.remove('filteringOn');
+                        }
                         if(selectedBadgeToRemove != null) {
                             removeFilterContent(badgesParent, selectedBadgeToRemove);
                         }
@@ -116,8 +119,16 @@ document.addEventListener('DOMContentLoaded', function() {
         //Create Result Message
         function createResultsMessage(selectedFilter){
             var resultsLabel = document.querySelector('.results-message');
-            var totalSearchItems = document.querySelectorAll('.contents-list li:not(.content-item-hidden)').length;
-            resultsLabel.innerHTML = `Displaying ${totalSearchItems} of ${totalSearchItems}`;
+            var filteredItems = document.querySelectorAll('.contents-list li.checked');
+            if(filteredItems.length){
+                console.log("HAS");
+                resultsLabel.innerHTML = `Displaying ${filteredItems.length} of ${filteredItems.length}`;
+            }
+            else {
+                console.log("HAS NOT");
+                var totalSearchItems = document.querySelectorAll('.contents-list li').length;
+                resultsLabel.innerHTML = `Displaying ${totalSearchItems} of ${totalSearchItems}`;
+            }
         }
 
         //Filter Badges
