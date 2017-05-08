@@ -128,7 +128,7 @@
                 right: 0;
                 color: $black;
                 position: absolute;
-                margin-top: 0.35em;
+                margin-top: 0.75em;
                 margin-right: 0.5em;
                 width: 8px;
                 height: 8px;
@@ -149,7 +149,7 @@
               }
               input[type="text"] {
                 border: 1px solid $dark-gray;
-                padding: 1em;
+                padding: 0.75em 1em;
                 box-sizing: border-box;
                 @include tabletportrait {
                   width: 100%;

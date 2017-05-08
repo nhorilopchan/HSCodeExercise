@@ -4,6 +4,168 @@ document.addEventListener('DOMContentLoaded', function() {
     /* Global Variables */
     const filterParentControl = document.getElementById('contentsParent');
 
+    /* Functions */
+    //Toggle CssClasses
+    function toggleClass(control,className){
+        if (control.classList) {
+            control.classList.toggle(className);
+        } else {
+            var classes = control.className.split(' ');
+            var existingIndex = classes.indexOf(className);
+
+            if (existingIndex >= 0)
+                classes.splice(existingIndex, 1);
+            else
+                classes.push(className);
+
+            control.className = classes.join(' ');
+        }
+    }
+    //Dropdowns
+    function showHideMedia(mediaItems,controlClass){
+        [].forEach.call(mediaItems, mediaItem => {
+            mediaItem.addEventListener('change', evt => {
+                const { value } = evt.target;
+                const dataFilter = mediaItem.dataset.filter;
+                const filterType = mediaItem.getAttribute('class');
+                const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
+
+                //Add class "filteringOn" on click
+                if(!filterParentControl.classList.contains('filteringOn')){
+                    filterParentControl.classList.add('filteringOn');
+                }
+
+                var contents = document.querySelectorAll(`.contents-list li[data-filter*="${mediaItem.value}"]`);
+                [].forEach.call(contents,content=>{
+                    toggleClass(content,'checked');
+                    createResultsMessage({ value });
+                });
+                if(mediaItem.checked) {
+                    // console.log(mediaItem);
+                    createFilterBadges(mediaItem.value, mediaItem.dataset.filter, mediaItem.getAttribute('class'));
+                }
+                else{
+                    var badgesParent = document.querySelector('.selected-filters');
+                    var selectedBadgeToRemove = document.querySelector(`.selected-filters span[value="${mediaItem.value}"]`);
+
+                    //When no checkboxes/radiobuttons are checked, display all results
+                    if(!document.querySelectorAll(`.filter-list:checked`).length ||!document.querySelectorAll(`.filter-radio:checked`).length){
+                        filterParentControl.classList.remove('filteringOn');
+                    }
+                    if(selectedBadgeToRemove != null) {
+                        removeFilterContent(badgesParent, selectedBadgeToRemove);
+                    }
+                }
+
+            });
+        });
+    }
+    //Create Result Message
+    function createResultsMessage(){
+        console.log("CREATE MSG");
+        var resultsLabel = document.querySelector('.results-message');
+        var filteredItems = document.querySelectorAll('.contents-list li.checked');
+        if(filteredItems.length){
+            resultsLabel.innerHTML = `Displaying ${filteredItems.length} of ${filteredItems.length}`;
+            console.log(filteredItems);
+        }
+        else {
+            var totalSearchItems = document.querySelectorAll('.contents-list li').length;
+            resultsLabel.innerHTML = `Displaying ${totalSearchItems} of ${totalSearchItems}`;
+            console.log(totalSearchItems);
+        }
+    }
+    //Filter Badges
+    function createFilterBadges(selectedFilter, selectedFilterAtt,selectedFilterType) {
+        if (selectedFilter != undefined) {
+            var selectedBadgesParent = document.querySelector('.selected-filters');
+
+            //Create new Badge
+            var filterBadge = document.createElement('span');
+            //Add attributes
+            filterBadge.classList.add('badge','checked');
+            filterBadge.setAttribute('data-filter', selectedFilterAtt);
+            filterBadge.setAttribute('data-control', selectedFilterType);
+            filterBadge.setAttribute('value', selectedFilter);
+            filterBadge.innerHTML = selectedFilter;
+
+            if(selectedBadgesParent.children.length){
+                var childBadges = document.querySelector(`.selected-filters span[value="${selectedFilter}"]`);
+                // console.log(childBadges);
+                if(childBadges != null) {
+                    //Filter Badge exists
+                    return false;
+                }
+            }
+            //Insert new Badge
+            selectedBadgesParent.insertBefore(filterBadge, selectedBadgesParent.firstChild);
+
+            //Click event to each selected Filter Badge\
+            filterBadge.addEventListener('click', event => {
+                const badge = event.target;
+                // console.log('this');
+                console.log(selectedBadgesParent.childElementCount);
+                if(selectedBadgesParent.childElementCount < 2){
+                    if(filterParentControl.classList.contains('filteringOn')){
+                        filterParentControl.classList.remove('filteringOn');
+                    }
+                    else if(filterParentControl.classList.contains('filteringByTextOn')){
+                        filterParentControl.classList.remove('filteringByTextOn');
+                    }
+                }
+
+                removeFilterContent(selectedBadgesParent, event.target);
+                var dataFilterAttribute = badge.dataset.filter;
+                var filterControlType = badge.dataset.control;
+                clearSelectedFilters(dataFilterAttribute, event.target, filterControlType);
+            });
+        }
+    }
+    //Remove Filters from Content
+    function removeFilterContent(filtersBadges,selectedFilter){
+        //Remove selected Filter from Content Lists
+
+        console.log(selectedFilter.innerHTML);
+        var mediaListItems = document.querySelectorAll(`.contents-list li[data-filter*="${selectedFilter.innerHTML}"]`);
+        console.log(mediaListItems);
+        [].forEach.call(mediaListItems, mediaListItem => {
+            console.log("REMOVING");
+            console.log(mediaListItem);
+            if(mediaListItem.classList.contains('checked')){
+                mediaListItem.classList.remove('checked');
+            }
+        });
+        filtersBadges.removeChild(selectedFilter);
+        //Handle textbox clear event
+        if(document.querySelectorAll('.search-list li[data-selected="true"]').length){
+            var selectedInputItem = document.querySelectorAll('.search-list li[data-selected="true"]')[0];
+            selectedInputItem.setAttribute("data-selected","false");
+            document.getElementById('search-text-input').value='';
+        }
+        createResultsMessage();
+    }
+    //Clear all Filter Controls
+    //Checkboxes
+    function clearSelectedFilters(dataFilterAtt,currControl,filterType) {
+        var controls =  document.querySelectorAll(`.${filterType}[data-filter*="${dataFilterAtt}"][value="${currControl.innerHTML}"]`);
+        console.log(controls);
+        [].forEach.call(controls, (control) => {
+            control.checked = false;
+        });
+
+    }
+    //Clear ALL Filters
+    function clearAllFilters(controls){
+        console.log(controls);
+        [].forEach.call(controls, currcontrol=>{
+            console.log(controls);
+            [].forEach.call(currcontrol,control=>{
+                control.checked = false;
+            });
+        });
+    }
+
+    /* Events */
     if(document.querySelectorAll('.filterable-content-block').length){
         //Adds search icon to the search input field
         document.addEventListener('click', function() {
@@ -24,11 +186,12 @@ document.addEventListener('DOMContentLoaded', function() {
             //     }
             // });
         });
+
+        //Create div for "Search Icon" and insert div element in the parent
         var searchinputel = document.getElementById('search-input');
         var eldiv = document.createElement('div');
         searchinputel.insertBefore(eldiv,searchinputel.firstChild);
         eldiv.className += " search icon";
-
 
         //Search By Genre/Year Toggle on click
         var toggleControls = document.querySelectorAll('.toggle');
@@ -44,7 +207,15 @@ document.addEventListener('DOMContentLoaded', function() {
         });
         //Search By Title - Autocomplete
         var searchinput = document.querySelector('#search-input');
-        var items = document.querySelector('.search-list').getElementsByTagName('li');
+
+        //Add class 'filteringByTextOn'
+        if(document.querySelector('#search-text-input').value.length){
+            if(filterParentControl.classList.contains('filteringByTextOn')){
+                filterParentControl.classList.add('filteringByTextOn');
+            }
+        }
+
+        //Trigger Textbox keyup event
         searchinput.addEventListener('keyup', function(evt) {
             const { value } = evt.target;
             var pat = new RegExp(value, 'i');
@@ -68,6 +239,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 })
                 createResultsMessage();
             }
+            //Show/Hide matching items (autocomplete)
             for (var i = 0; i < items.length; i++) {
                 var item = items[i];
                 if (pat.test(item.innerText)) {
@@ -78,20 +250,20 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
-        if(document.querySelector('#search-text-input').value.length){
-            if(filterParentControl.classList.contains('filteringByTextOn')){
-                filterParentControl.classList.add('filteringByTextOn');
-            }
-        }
+
+        //Click event on each item on the autocomplete dropdown
+        var items = document.querySelector('.search-list').getElementsByTagName('li');
         [].forEach.call(items,item=>{
             item.addEventListener('click',evt=>{
                 const { value } = evt.target;
                 item.dataset.selected = true;
                 var textBox = document.getElementById('search-text-input');
-                console.log(textBox.value);
-                console.log(item.innerHTML);
+                // console.log(textBox.value);
+                // console.log(item.innerHTML);
                 textBox.value = item.innerHTML;
-
+                //Create Filter Badge
+                createFilterBadges(textBox.value, item.dataset.filter,null);
+                //Add unique class to identify search by text
                 if(!filterParentControl.classList.contains('filteringByTextOn')){
                     filterParentControl.classList.add('filteringByTextOn');
                 }
@@ -107,130 +279,6 @@ document.addEventListener('DOMContentLoaded', function() {
                 });
             });
         });
-        //Toggle CssClasses
-        function toggleClass(control,className){
-            if (control.classList) {
-                control.classList.toggle(className);
-            } else {
-                var classes = control.className.split(' ');
-                var existingIndex = classes.indexOf(className);
-
-                if (existingIndex >= 0)
-                    classes.splice(existingIndex, 1);
-                else
-                    classes.push(className);
-
-                control.className = classes.join(' ');
-            }
-        }
-        //Dropdowns
-        function showHideMedia(mediaItems,controlClass){
-            [].forEach.call(mediaItems, mediaItem => {
-                mediaItem.addEventListener('change', evt => {
-                    const { value } = evt.target;
-                    const dataFilter = mediaItem.dataset.filter;
-                    const filterType = mediaItem.getAttribute('class');
-                    const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
-
-                    //Add class "filteringOn" on click
-                    if(!filterParentControl.classList.contains('filteringOn')){
-                        filterParentControl.classList.add('filteringOn');
-                    }
-
-                    var contents = document.querySelectorAll(`.contents-list li[data-filter*="${mediaItem.value}"]`);
-                    [].forEach.call(contents,content=>{
-                        toggleClass(content,'checked');
-                        createResultsMessage({ value });
-                    });
-                    if(mediaItem.checked) {
-                        // console.log(mediaItem);
-                        createFilterBadges(mediaItem.value, mediaItem.dataset.filter, mediaItem.getAttribute('class'));
-                    }
-                    else{
-                        var badgesParent = document.querySelector('.selected-filters');
-                        var selectedBadgeToRemove = document.querySelector(`.selected-filters span[value="${mediaItem.value}"]`);
-
-                        //When no checkboxes/radiobuttons are checked, display all results
-                        if(!document.querySelectorAll(`.filter-list:checked`).length ||!document.querySelectorAll(`.filter-radio:checked`).length){
-                            filterParentControl.classList.remove('filteringOn');
-                        }
-                        if(selectedBadgeToRemove != null) {
-                            removeFilterContent(badgesParent, selectedBadgeToRemove);
-                        }
-                    }
-
-                });
-            });
-        }
-
-        //Create Result Message
-        function createResultsMessage(){
-            var resultsLabel = document.querySelector('.results-message');
-            var filteredItems = document.querySelectorAll('.contents-list li.checked');
-            if(filteredItems.length){
-                resultsLabel.innerHTML = `Displaying ${filteredItems.length} of ${filteredItems.length}`;
-            }
-            else {
-                var totalSearchItems = document.querySelectorAll('.contents-list li').length;
-                resultsLabel.innerHTML = `Displaying ${totalSearchItems} of ${totalSearchItems}`;
-            }
-        }
-
-        //Filter Badges
-        function createFilterBadges(selectedFilter, selectedFilterAtt,selectedFilterType) {
-            if (selectedFilter != undefined) {
-                var selectedBadgesParent = document.querySelector('.selected-filters');
-
-                //Create new Badge
-                var filterBadge = document.createElement('span');
-                //Add attributes
-                filterBadge.classList.add('badge','checked');
-                filterBadge.setAttribute('data-filter', selectedFilterAtt);
-                filterBadge.setAttribute('data-control', selectedFilterType);
-                filterBadge.setAttribute('value', selectedFilter);
-                filterBadge.innerHTML = selectedFilter;
-
-                if(selectedBadgesParent.children.length){
-                    var childBadges = document.querySelector(`.selected-filters span[value="${selectedFilter}"]`);
-                    console.log(childBadges);
-                    // if(childBadges.dataset.control === 'filter-radio'){
-                    //     childBadges = document.querySelector(`.selected-filters span[value="${selectedFilter}"] [data-control="filter-radio"]`);
-                    //     console.log("RADIO");
-                    //     console.log(childBadges);
-                    //     selected-filters.removeChild(childBadges);
-                    // }
-                    if(childBadges != null) {
-                        //Filter Badge exists
-                        return false;
-                    }
-                }
-                //Insert new Badge
-                selectedBadgesParent.insertBefore(filterBadge, selectedBadgesParent.firstChild);
-
-                //Click event to each selected Filter Badge\
-                filterBadge.addEventListener('click', event => {
-                    const badge = event.target;
-                    // console.log('this');
-                     console.log(document.querySelectorAll('.contents-list li.checked'));
-                    if(!document.querySelectorAll('.contents-list li.checked').length){
-                        console.log('ReMOVING ALL');
-                        if(filterParentControl.classList.contains('filteringOn')){
-                            filterParentControl.classList.remove('filteringOn');
-                        }
-                        else if(filterParentControl.classList.contains('filteringByTextOn')){
-                            console.log('ReMOVING ALL');
-                            filterParentControl.classList.remove('filteringByTextOn');
-                        }
-                    }
-                    else {
-                        removeFilterContent(selectedBadgesParent, event.target);
-                        var dataFilterAttribute = badge.dataset.filter;
-                        var filterControlType = badge.dataset.control;
-                        clearSelectedFilters(dataFilterAttribute, event.target, filterControlType);
-                    }
-                });
-            }
-        }
 
         //By Genre and Year - Dropdowns
         const checkboxClass = '.filter-list';
@@ -242,43 +290,6 @@ document.addEventListener('DOMContentLoaded', function() {
         const radiobtns = document.querySelectorAll(radiobtnClass);
         showHideMedia(radiobtns,radiobtnClass);
 
-        //Remove Filters from Content
-        function removeFilterContent(filtersBadges,selectedFilter){
-            //Remove selected Filter from Content Lists
-            console.log("REMOVING");
-            console.log(selectedFilter);
-            var mediaListItems = document.querySelectorAll(`.contents-list li[data-filter*="${selectedFilter.innerHTML}"]`);
-            [].forEach.call(mediaListItems, mediaListItem => {
-                //console.log(mediaListItem);
-                if(mediaListItem.classList.contains('checked')){
-                    mediaListItem.classList.remove('checked');
-                }
-            });
-
-            filtersBadges.removeChild(selectedFilter);
-            createResultsMessage();
-        }
-
-        //Clear all Filter Controls
-        //Checkboxes
-        function clearSelectedFilters(dataFilterAtt,currControl,filterType) {
-            var controls =  document.querySelectorAll(`.${filterType}[data-filter*="${dataFilterAtt}"][value="${currControl.innerHTML}"]`);
-            console.log(controls);
-            [].forEach.call(controls, (control) => {
-                control.checked = false;
-            });
-
-        }
-        //Clear ALL Filters
-        function clearAllFilters(controls){
-            console.log(controls);
-            [].forEach.call(controls, currcontrol=>{
-                console.log(controls);
-                [].forEach.call(currcontrol,control=>{
-                    control.checked = false;
-                });
-            });
-        }
         //Search Results Info
         createResultsMessage();
         //Clear All Filters Button Click

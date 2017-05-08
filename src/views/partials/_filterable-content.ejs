@@ -62,7 +62,7 @@ function getUniqueValues(array, key) {
                             <% const uniqueTitles= getUniqueValues(data.media, "title");
 							uniqueTitles.forEach(title => {
                             %>
-							<li data-selected="false"><%=title%></li>
+							<li data-selected="false" data-filter="<%=title%>" data-control="textbox"><%=title%></li>
                             <%});%>
 						</ul>
 					</div>
@@ -92,7 +92,8 @@ function getUniqueValues(array, key) {
 				<ul class="contents-list" id="contentsParent">
                     <% data.media.forEach(media => {
                     %>
-					<li data-filter="<%= media.year%> <%= media.genre%> <%= media.type %>" class="content-item-visible">
+					<li data-filter="<%= media.year%> <%= media.genre%> <%= media.type %> <%= media.title %>"
+                        class="content-item-visible">
 						<div class="thumbnail-wrapper">
 							<a href="https://www.google.com/search?q=<%= media.title %>" title="<%= media.title %>"
 							   target="_blank">
