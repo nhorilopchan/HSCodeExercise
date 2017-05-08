@@ -100,6 +100,14 @@
                   @include dropdowns($isdropdown);
                   z-index:1;
 
+                  li{
+                    text-transform: uppercase;
+                    font-size: 1.15em;
+
+                    input[type="checkbox"]{
+                      margin-right: 1em;
+                    }
+                  }
                   @include tabletportrait{
                     position:static;
                   }
@@ -141,7 +149,7 @@
               }
               input[type="text"] {
                 border: 1px solid $dark-gray;
-                padding: 0.5em 1em;
+                padding: 1em;
                 box-sizing: border-box;
                 @include tabletportrait {
                   width: 100%;
@@ -174,6 +182,7 @@
                   transition:all 0.3s ease;
                   position:relative;
                   padding:0.5em 1em;
+                  text-transform: uppercase;
 
                   &:hover{
                     background:$light-gray-bg;
@@ -268,6 +277,12 @@
 
             &.content-item-visible{
               display:block;
+              @include tabletportrait{
+                width:50%;
+              }
+              @include phoneportrait{
+                width:100%;
+              }
             }
           }
           &.filteringOn,&.filteringByTextOn{

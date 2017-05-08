@@ -131,22 +131,18 @@ document.addEventListener('DOMContentLoaded', function() {
                     const dataFilter = mediaItem.dataset.filter;
                     const filterType = mediaItem.getAttribute('class');
                     const filtercontrols = document.querySelectorAll(`${controlClass}:checked`);
-                    //const filterParentControl = document.getElementById('contentsParent');
 
+                    //Add class "filteringOn" on click
                     if(!filterParentControl.classList.contains('filteringOn')){
                         filterParentControl.classList.add('filteringOn');
                     }
 
-                    var contents1 = document.querySelectorAll(`.contents-list li[data-filter*="${mediaItem.value}"]`);
-                    [].forEach.call(contents1,content1=>{
-                        console.log("CONTENT1");
-                        console.log(content1);
-
-                        toggleClass(content1,'checked');
+                    var contents = document.querySelectorAll(`.contents-list li[data-filter*="${mediaItem.value}"]`);
+                    [].forEach.call(contents,content=>{
+                        toggleClass(content,'checked');
                         createResultsMessage({ value });
                     });
                     if(mediaItem.checked) {
-                        // console.log("CHECKING");
                         // console.log(mediaItem);
                         createFilterBadges(mediaItem.value, mediaItem.dataset.filter, mediaItem.getAttribute('class'));
                     }
@@ -154,8 +150,8 @@ document.addEventListener('DOMContentLoaded', function() {
                         var badgesParent = document.querySelector('.selected-filters');
                         var selectedBadgeToRemove = document.querySelector(`.selected-filters span[value="${mediaItem.value}"]`);
 
-                        //When no checkboxes are checked, display all results
-                        if(!document.querySelectorAll(`.filter-list:checked`).length){
+                        //When no checkboxes/radiobuttons are checked, display all results
+                        if(!document.querySelectorAll(`.filter-list:checked`).length ||!document.querySelectorAll(`.filter-radio:checked`).length){
                             filterParentControl.classList.remove('filteringOn');
                         }
                         if(selectedBadgeToRemove != null) {
@@ -196,9 +192,15 @@ document.addEventListener('DOMContentLoaded', function() {
 
                 if(selectedBadgesParent.children.length){
                     var childBadges = document.querySelector(`.selected-filters span[value="${selectedFilter}"]`);
-
+                    console.log(childBadges);
+                    // if(childBadges.dataset.control === 'filter-radio'){
+                    //     childBadges = document.querySelector(`.selected-filters span[value="${selectedFilter}"] [data-control="filter-radio"]`);
+                    //     console.log("RADIO");
+                    //     console.log(childBadges);
+                    //     selected-filters.removeChild(childBadges);
+                    // }
                     if(childBadges != null) {
-                        //console.log('BADGE EXISTS');
+                        //Filter Badge exists
                         return false;
                     }
                 }
@@ -208,13 +210,24 @@ document.addEventListener('DOMContentLoaded', function() {
                 //Click event to each selected Filter Badge\
                 filterBadge.addEventListener('click', event => {
                     const badge = event.target;
-                    console.log('this');
-                    console.log(event.target);
-
-                    removeFilterContent(selectedBadgesParent, event.target);
-                    var dataFilterAttribute = badge.dataset.filter;
-                    var filterControlType = badge.dataset.control;
-                    clearSelectedFilters(dataFilterAttribute,event.target,filterControlType);
+                    // console.log('this');
+                     console.log(document.querySelectorAll('.contents-list li.checked'));
+                    if(!document.querySelectorAll('.contents-list li.checked').length){
+                        console.log('ReMOVING ALL');
+                        if(filterParentControl.classList.contains('filteringOn')){
+                            filterParentControl.classList.remove('filteringOn');
+                        }
+                        else if(filterParentControl.classList.contains('filteringByTextOn')){
+                            console.log('ReMOVING ALL');
+                            filterParentControl.classList.remove('filteringByTextOn');
+                        }
+                    }
+                    else {
+                        removeFilterContent(selectedBadgesParent, event.target);
+                        var dataFilterAttribute = badge.dataset.filter;
+                        var filterControlType = badge.dataset.control;
+                        clearSelectedFilters(dataFilterAttribute, event.target, filterControlType);
+                    }
                 });
             }
         }
