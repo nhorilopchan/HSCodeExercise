@@ -62,17 +62,17 @@ document.addEventListener('DOMContentLoaded', function() {
     }
     //Create Result Message
     function createResultsMessage(){
-        console.log("CREATE MSG");
+        // console.log("CREATE MSG");
         var resultsLabel = document.querySelector('.results-message');
         var filteredItems = document.querySelectorAll('.contents-list li.checked');
         if(filteredItems.length){
             resultsLabel.innerHTML = `Displaying ${filteredItems.length} of ${filteredItems.length}`;
-            console.log(filteredItems);
+            // console.log(filteredItems);
         }
         else {
             var totalSearchItems = document.querySelectorAll('.contents-list li').length;
             resultsLabel.innerHTML = `Displaying ${totalSearchItems} of ${totalSearchItems}`;
-            console.log(totalSearchItems);
+            // console.log(totalSearchItems);
         }
     }
     //Filter Badges
@@ -223,6 +223,31 @@ document.addEventListener('DOMContentLoaded', function() {
             if(!searchList.classList.contains('active')) {
                 searchList.classList.add('active');
             }
+            if(!document.querySelector('#search-input').classList.contains('active')) {
+                document.querySelector('#search-input').classList.add('active');
+                //Clear Textbox
+                var closeIcon = document.querySelector('.search-input.active .search.icon');
+                closeIcon.addEventListener('click',evt=>{
+                    console.log(evt.target);
+                    //Empty textbox
+                    document.querySelector('#search-text-input').value = '';
+                    //Remove class active to display search icon
+                    if(document.querySelector('.search-input.active').classList.contains('active')){
+                    document.querySelector('.search-input.active').classList.remove('active');
+                    }
+                    //Remove filtering
+                    var filteredItems = document.querySelectorAll(`.filteringTextOn li.checked[data-filter*="${value}"]`);
+                    filteredItems.forEach(filteredItem =>{
+                       if(filteredItem.classList.contains('checked')){
+                           filteredItem.classList.remove('checked');
+                       }
+                    });
+                    if( document.getElementById("contentsParent").classList.contains('filteringByTextOn')){
+                        document.getElementById("contentsParent").classList.remove('filteringTextOn');
+                    }
+                    createResultsMessage();
+                });
+            }
             //If input field is empty, hide the list
             if(value.length < 1){
                 if(document.querySelector('.search-list').classList.contains('active')){
@@ -250,6 +275,7 @@ document.addEventListener('DOMContentLoaded', function() {
                 }
             }
         });
+
 
         //Click event on each item on the autocomplete dropdown
         var items = document.querySelector('.search-list').getElementsByTagName('li');
